@@ -2,6 +2,7 @@ import { Box, IconButton, TextField, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { TopBar } from './components/topbar';
 import { ChangeEvent, KeyboardEvent, useState } from 'react';
+import { API } from './services/api/api';
 
 function App() {
   const [query, setQuery] = useState('');
@@ -14,12 +15,15 @@ function App() {
 
   const handleQuerySubmit = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter') {
-      sendQuery();
+      sendQuery(query);
       setQuery('');
     }
   };
 
-  const sendQuery = async () => {};
+  const sendQuery = async (query: string) => {
+    const foods = await API.queryFood(query);
+    console.log(foods);
+  };
 
   return (
     <>
