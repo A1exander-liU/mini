@@ -5,6 +5,7 @@ import {
   Box,
   CircularProgress,
   IconButton,
+  Pagination,
   Stack,
   TextField,
   Typography,
@@ -12,16 +13,40 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import { TopBar } from './components/topbar';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { ChangeEvent, KeyboardEvent, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react';
 import { API } from './services/api/api';
 import { Food } from './services/api/types';
 import { isAxiosError } from 'axios';
 
 function App() {
+  const PER_PAGE = 10;
   const [query, setQuery] = useState('');
 
   const [foods, setFoods] = useState<Food[]>([]);
   const [loading, setLoading] = useState(false);
+
+  const [pages, setPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageStart, setPageStart] = useState(0);
+
+  useEffect(() => {
+    const paginationCalculations = () => {
+      const pages = Math.ceil(foods.length / PER_PAGE);
+      console.log(`${foods.length} entries, ${PER_PAGE} per page`);
+      console.log(`${pages} pages are needed`);
+
+      setPages(pages);
+    };
+    paginationCalculations();
+  }, [foods]);
+
+  useEffect(() => {
+    setPageStart(PER_PAGE * (currentPage - 1));
+  }, [currentPage]);
+
+  const handlePageChange = (e: ChangeEvent<unknown>, value: number) => {
+    setCurrentPage(value);
+  };
 
   const handleQueryChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -51,6 +76,7 @@ function App() {
     } finally {
       setQuery('');
       setLoading(false);
+      setCurrentPage(1);
     }
   };
 
@@ -84,26 +110,41 @@ function App() {
         </Box>
         <Stack direction={'column'} spacing={1}>
           {foods &&
-            foods.map((food) => {
-              return (
-                <Accordion key={food.Display_Name}>
-                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    <Typography>{food.Display_Name}</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    {food.Calories_By_Portion.map((data, index) => {
-                      return (
-                        <Typography key={index}>
-                          Serving: {data.Portion_Amount}
-                          {data.Portion_Display_Name} | {data.Calories} Calories
-                        </Typography>
-                      );
-                    })}
-                  </AccordionDetails>
-                </Accordion>
-              );
-            })}
+            foods
+              .slice(pageStart, Math.min(foods.length, pageStart + PER_PAGE))
+              .map((food) => {
+                return (
+                  <Accordion key={food.Display_Name}>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                      <Typography>{food.Display_Name}</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      {food.Calories_By_Portion.map((data, index) => {
+                        return (
+                          <Typography key={index}>
+                            Serving: {data.Portion_Amount}
+                            {data.Portion_Display_Name} | {data.Calories}{' '}
+                            Calories
+                          </Typography>
+                        );
+                      })}
+                    </AccordionDetails>
+                  </Accordion>
+                );
+              })}
         </Stack>
+        {foods.length != 0 ? (
+          <Pagination
+            sx={{ justifyContent: 'center' }}
+            count={pages}
+            page={currentPage}
+            onChange={handlePageChange}
+            showFirstButton
+            showLastButton
+          />
+        ) : (
+          <></>
+        )}
       </Box>
     </>
   );
