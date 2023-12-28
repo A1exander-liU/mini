@@ -17,9 +17,13 @@ import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react';
 import { API } from './services/api/api';
 import { Food } from './services/api/types';
 import { isAxiosError } from 'axios';
+import {
+  PER_PAGE,
+  numberOfPages,
+  pageStartIndex,
+} from './services/scripts/app/functions';
 
 function App() {
-  const PER_PAGE = 10;
   const [query, setQuery] = useState('');
 
   const [foods, setFoods] = useState<Food[]>([]);
@@ -31,7 +35,7 @@ function App() {
 
   useEffect(() => {
     const paginationCalculations = () => {
-      const pages = Math.ceil(foods.length / PER_PAGE);
+      const pages = numberOfPages(foods.length);
       console.log(`${foods.length} entries, ${PER_PAGE} per page`);
       console.log(`${pages} pages are needed`);
 
@@ -41,7 +45,7 @@ function App() {
   }, [foods]);
 
   useEffect(() => {
-    setPageStart(PER_PAGE * (currentPage - 1));
+    setPageStart(pageStartIndex(currentPage));
   }, [currentPage]);
 
   const handlePageChange = (e: ChangeEvent<unknown>, value: number) => {
