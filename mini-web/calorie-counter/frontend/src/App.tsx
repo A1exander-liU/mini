@@ -1,11 +1,20 @@
-import { Box, IconButton, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  CircularProgress,
+  IconButton,
+  TextField,
+  Typography,
+} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { TopBar } from './components/topbar';
 import { ChangeEvent, KeyboardEvent, useState } from 'react';
 import { API } from './services/api/api';
+import { Food } from './services/api/types';
 
 function App() {
   const [query, setQuery] = useState('');
+  const [foods, setFoods] = useState<Food[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const handleQueryChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -15,14 +24,18 @@ function App() {
 
   const handleQuerySubmit = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter') {
-      sendQuery(query);
-      setQuery('');
+      sendQuery();
     }
   };
 
-  const sendQuery = async (query: string) => {
+  const sendQuery = async () => {
+    setLoading(true);
     const foods = await API.queryFood(query);
-    console.log(foods);
+    setLoading(false);
+
+    setQuery('');
+
+    setFoods(foods);
   };
 
   return (
@@ -40,10 +53,19 @@ function App() {
             onKeyDown={(e) => handleQuerySubmit(e)}
             sx={{ flexGrow: 1 }}
           />
-          <IconButton sx={{ borderRadius: 1 }}>
+          <IconButton onClick={sendQuery} sx={{ borderRadius: 1 }}>
             <SearchIcon sx={{ height: '100%' }} />
           </IconButton>
         </Box>
+        {loading ? <CircularProgress /> : <></>}
+        {foods &&
+          foods.map((food) => {
+            return (
+              <Typography key={food.Display_Name}>
+                {food.Display_Name}
+              </Typography>
+            );
+          })}
       </Box>
     </>
   );
