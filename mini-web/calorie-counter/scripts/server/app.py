@@ -3,6 +3,7 @@ from os import getenv;
 from dotenv import load_dotenv;
 from flask import Flask;
 from sqlalchemy import select, or_;
+from flask_cors import CORS
 
 from db_base import db;
 from models.food import Food;
@@ -11,6 +12,8 @@ load_dotenv()
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = getenv("DATABASE_URL")
+
+CORS(app)
 db.init_app(app)
 
 BASE = '/api'
