@@ -22,6 +22,7 @@ import {
   numberOfPages,
   pageStartIndex,
 } from './services/scripts/app/functions';
+import Serving from './components/serving';
 
 function App() {
   const [query, setQuery] = useState('');
@@ -123,15 +124,18 @@ function App() {
                       <Typography>{food.Display_Name}</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                      {food.Calories_By_Portion.map((data, index) => {
-                        return (
-                          <Typography key={index}>
-                            Serving: {data.Portion_Amount}
-                            {data.Portion_Display_Name} | {data.Calories}{' '}
-                            Calories
-                          </Typography>
-                        );
-                      })}
+                      <Stack direction={'column'} spacing={1}>
+                        {food.Calories_By_Portion.map((data, index) => {
+                          return (
+                            <Serving
+                              key={index}
+                              calories={data.Calories}
+                              portionAmount={data.Portion_Amount}
+                              portionName={data.Portion_Display_Name}
+                            />
+                          );
+                        })}
+                      </Stack>
                     </AccordionDetails>
                   </Accordion>
                 );
@@ -139,7 +143,8 @@ function App() {
         </Stack>
         {foods.length != 0 ? (
           <Pagination
-            sx={{ justifyContent: 'center' }}
+            sx={{ margin: '.5rem 0' }}
+            color='primary'
             count={pages}
             page={currentPage}
             onChange={handlePageChange}
