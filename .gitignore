@@ -1,0 +1,11 @@
+.env
+
+# Python
+.venv
+__pycache__
+
+# VS Code
+.vscode/
+
+# JS/TS
+node_modules
