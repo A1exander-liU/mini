@@ -64,7 +64,7 @@ export default function Serving({
       if (prev === '') {
         return 1;
       }
-      return Math.max(0, prev - 1);
+      return Math.max(1, prev - 1);
     });
   };
 
