@@ -1,4 +1,12 @@
-import { Avatar, Box, Chip, Paper, Stack, Typography } from '@mui/material';
+import {
+  Avatar,
+  Box,
+  Chip,
+  Link,
+  Paper,
+  Stack,
+  Typography,
+} from '@mui/material';
 import { FullInfo, FullUser, Repo } from '../services/api/types';
 import type {} from '@mui/lab/themeAugmentation';
 import {
@@ -7,6 +15,7 @@ import {
   TimelineContent,
   TimelineDot,
   TimelineItem,
+  TimelineOppositeContent,
   TimelineSeparator,
 } from '@mui/lab';
 
@@ -31,7 +40,11 @@ function UserInfoHeader({ user }: FullUserProps) {
         src={user.avatarUrl}
       />
       <Stack direction={'column'} spacing={1}>
-        <Typography variant='h6'>{user.username}</Typography>
+        <Typography variant='h6'>
+          <Link href={user.url} underline='none'>
+            {user.username}
+          </Link>
+        </Typography>
         <Stack direction={'row'} spacing={3}>
           <Typography variant='subtitle2'>
             Repositories <Chip size='small' label={user.repositoryCount} />{' '}
@@ -49,29 +62,44 @@ function RepoTimeline({ repos }: RepoProps) {
   repos.sort((a, b) => {
     return new Date(a.createdAt).valueOf() - new Date(b.createdAt).valueOf();
   });
-  for (const repo of repos) {
-    const date = new Date(repo.createdAt);
 
+  const repositories = repos.map((repo) => {
+    const date = new Date(repo.createdAt);
     const year = date.getUTCFullYear();
     const month = date.getUTCMonth() + 1;
     const day = date.getUTCDate();
-
-    console.log(repo.name, year, month, day);
-  }
+    return {
+      name: repo.name,
+      description: repo.description || 'No description',
+      createdAt: repo.createdAt,
+      stars: repo.stars,
+      year,
+      month,
+      day,
+    };
+  });
 
   return (
     <>
       <Box>
         <Typography variant='h6'>Timeline</Typography>
         <Timeline>
-          {repos.map((repo, index) => {
+          {repositories.map((repo, index) => {
             return (
               <TimelineItem key={repo.name}>
+                <TimelineOppositeContent color={'text.secondary'}>
+                  <Typography>
+                    {repo.year}/{repo.month}/{repo.day}
+                  </Typography>
+                </TimelineOppositeContent>
                 <TimelineSeparator>
                   <TimelineDot />
                   {index != repos.length - 1 ? <TimelineConnector /> : <></>}
                 </TimelineSeparator>
-                <TimelineContent>{repo.name}</TimelineContent>
+                <TimelineContent>
+                  <Typography>{repo.name}</Typography>
+                  <Typography variant='body2'>{repo.description}</Typography>
+                </TimelineContent>
               </TimelineItem>
             );
           })}
@@ -83,7 +111,6 @@ function RepoTimeline({ repos }: RepoProps) {
 
 export default function UserInfo({ info }: Props) {
   const user = info.user;
-  const followers = info.followers;
   const repos = info.repos;
 
   return (
