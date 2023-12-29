@@ -1,6 +1,7 @@
 export type User = {
   username: string;
   avatarUrl: string;
+  url: string;
 };
 
 export type FullUser = {

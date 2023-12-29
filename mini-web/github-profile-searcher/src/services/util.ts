@@ -4,6 +4,7 @@ export function extractUser(user): FullUser {
   return {
     username: user.login,
     avatarUrl: user.avatar_url,
+    url: user.html_url,
     followerCount: user.followers,
     repositoryCount: user.public_repos,
   };
