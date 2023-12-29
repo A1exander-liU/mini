@@ -1,9 +1,10 @@
+import { group } from 'console';
 import {
   FullUser,
-  GroupedRepoAndDate,
   Repo,
   RepoAndDate,
   RepoAndDateOrNumber,
+  RepoCountByYear,
   User,
 } from './api/types';
 
@@ -43,10 +44,22 @@ export function groupReposByYear(repos: RepoAndDate[]) {
   for (const repo of repos) {
     if (!grouped.includes(repo.year)) {
       grouped.push(repo.year);
-    } else {
-      grouped.push(repo);
     }
+    grouped.push(repo);
   }
 
   return grouped;
+}
+
+export function reposByYearCount(repos: RepoAndDate[]) {
+  const reposByYear: RepoCountByYear = {};
+
+  for (const repo of repos) {
+    if (!reposByYear[repo.year]) {
+      reposByYear[repo.year] = 0;
+    }
+    reposByYear[repo.year] += 1;
+  }
+
+  return reposByYear;
 }

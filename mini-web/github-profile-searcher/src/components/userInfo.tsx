@@ -18,7 +18,7 @@ import {
   TimelineOppositeContent,
   TimelineSeparator,
 } from '@mui/lab';
-import { groupReposByYear } from '../services/util';
+import { groupReposByYear, reposByYearCount } from '../services/util';
 
 interface Props {
   info: FullInfo;
@@ -80,8 +80,10 @@ function RepoTimeline({ repos }: RepoProps) {
     };
   });
 
+  console.log(repositories);
+
   const grouped = groupReposByYear(repositories);
-  console.log(grouped);
+  const repoCountByYear = reposByYearCount(repositories);
 
   return (
     <>
@@ -98,6 +100,9 @@ function RepoTimeline({ repos }: RepoProps) {
                   </TimelineSeparator>
                   <TimelineContent>
                     <Typography>{repo}</Typography>
+                    <Typography variant='subtitle2'>
+                      {repoCountByYear[repo]} Repositories
+                    </Typography>
                   </TimelineContent>
                 </TimelineItem>
               );
@@ -119,7 +124,9 @@ function RepoTimeline({ repos }: RepoProps) {
                   </TimelineSeparator>
                   <TimelineContent>
                     <Typography>{repo.name}</Typography>
-                    <Typography variant='body2'>{repo.description}</Typography>
+                    <Typography variant='subtitle2'>
+                      {repo.description}
+                    </Typography>
                   </TimelineContent>
                 </TimelineItem>
               );
