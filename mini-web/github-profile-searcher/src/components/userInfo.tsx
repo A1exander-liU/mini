@@ -18,6 +18,7 @@ import {
   TimelineOppositeContent,
   TimelineSeparator,
 } from '@mui/lab';
+import { groupReposByYear } from '../services/util';
 
 interface Props {
   info: FullInfo;
@@ -79,29 +80,50 @@ function RepoTimeline({ repos }: RepoProps) {
     };
   });
 
+  const grouped = groupReposByYear(repositories);
+  console.log(grouped);
+
   return (
     <>
       <Box>
         <Typography variant='h6'>Timeline</Typography>
         <Timeline>
-          {repositories.map((repo, index) => {
-            return (
-              <TimelineItem key={repo.name}>
-                <TimelineOppositeContent color={'text.secondary'}>
-                  <Typography>
-                    {repo.year}/{repo.month}/{repo.day}
-                  </Typography>
-                </TimelineOppositeContent>
-                <TimelineSeparator>
-                  <TimelineDot />
-                  {index != repos.length - 1 ? <TimelineConnector /> : <></>}
-                </TimelineSeparator>
-                <TimelineContent>
-                  <Typography>{repo.name}</Typography>
-                  <Typography variant='body2'>{repo.description}</Typography>
-                </TimelineContent>
-              </TimelineItem>
-            );
+          {grouped.map((repo, index) => {
+            if (typeof repo === 'number') {
+              return (
+                <TimelineItem position='left' key={index}>
+                  <TimelineSeparator>
+                    <TimelineDot />
+                    <TimelineConnector />
+                  </TimelineSeparator>
+                  <TimelineContent>
+                    <Typography>{repo}</Typography>
+                  </TimelineContent>
+                </TimelineItem>
+              );
+            } else {
+              return (
+                <TimelineItem key={index}>
+                  <TimelineOppositeContent>
+                    <Typography color={'text.secondary'}>
+                      {repo.month}/{repo.day}
+                    </Typography>
+                  </TimelineOppositeContent>
+                  <TimelineSeparator>
+                    <TimelineDot />
+                    {index != grouped.length - 1 ? (
+                      <TimelineConnector />
+                    ) : (
+                      <></>
+                    )}
+                  </TimelineSeparator>
+                  <TimelineContent>
+                    <Typography>{repo.name}</Typography>
+                    <Typography variant='body2'>{repo.description}</Typography>
+                  </TimelineContent>
+                </TimelineItem>
+              );
+            }
           })}
         </Timeline>
       </Box>
