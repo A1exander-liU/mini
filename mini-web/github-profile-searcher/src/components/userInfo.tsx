@@ -7,7 +7,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import { FullInfo, FullUser, Repo } from '../services/api/types';
+import { FullInfo, FullUser, Repo, RepoAndDate } from '../services/api/types';
 import type {} from '@mui/lab/themeAugmentation';
 import {
   Timeline,
@@ -83,6 +83,25 @@ function RepoTimeline({ repos }: RepoProps) {
   const grouped = groupReposByYear(repositories);
   const repoCountByYear = reposByYearCount(repositories);
 
+  const colours = ['primary', 'secondary', 'info', 'warning'];
+
+  const makeColourGroups = (repos: RepoAndDate[]) => {
+    let index = 0;
+    const grouped = {};
+    for (const year of new Set(repos.map((repo) => repo.year))) {
+      grouped[year] = colours[index];
+      if (index + 1 > colours.length - 1) {
+        index = 0;
+      } else {
+        index++;
+      }
+    }
+
+    return grouped;
+  };
+
+  const colourForGroups = makeColourGroups(repositories);
+
   return (
     <>
       <Box>
@@ -93,7 +112,7 @@ function RepoTimeline({ repos }: RepoProps) {
               return (
                 <TimelineItem position='left' key={index}>
                   <TimelineSeparator>
-                    <TimelineDot />
+                    <TimelineDot color={colourForGroups[repo]} />
                     <TimelineConnector />
                   </TimelineSeparator>
                   <TimelineContent>
@@ -113,7 +132,10 @@ function RepoTimeline({ repos }: RepoProps) {
                     </Typography>
                   </TimelineOppositeContent>
                   <TimelineSeparator>
-                    <TimelineDot />
+                    <TimelineDot
+                      variant='outlined'
+                      color={colourForGroups[repo.year]}
+                    />
                     {index != grouped.length - 1 ? (
                       <TimelineConnector />
                     ) : (
