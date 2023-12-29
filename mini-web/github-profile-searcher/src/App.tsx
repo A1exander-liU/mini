@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { grey } from '@mui/material/colors';
+import UserInfo from './components/userInfo';
 
 function App() {
   const [query, setQuery] = useState('');
@@ -26,6 +27,8 @@ function App() {
   }, [info, error]);
 
   const pullAllInfo = async (username: string) => {
+    setError('');
+
     const userInfo = await API.user(username);
 
     if (userInfo.error) {
@@ -54,6 +57,7 @@ function App() {
       return;
     }
 
+    setInfo(undefined);
     setLoading(true);
     await pullAllInfo(query);
     setQuery('');
@@ -98,7 +102,7 @@ function App() {
           {loading ? <CircularProgress /> : <></>}
         </Box>
         <Box marginBottom={'5rem'} />
-        <Paper sx={{ padding: '1rem' }}></Paper>
+        {info && <UserInfo info={info} />}
       </Box>
     </>
   );
