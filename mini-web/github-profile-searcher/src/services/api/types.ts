@@ -21,3 +21,11 @@ export type FullInfo = {
   followers: User[];
   repos: Repo[];
 };
+
+export type RepoAndDate = {
+  year: number;
+  month: number;
+  day: number;
+} & Repo;
+
+export type RepoAndDateOrNumber = RepoAndDate | number;

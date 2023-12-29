@@ -1,4 +1,11 @@
-import { FullUser, Repo, User } from './api/types';
+import {
+  FullUser,
+  GroupedRepoAndDate,
+  Repo,
+  RepoAndDate,
+  RepoAndDateOrNumber,
+  User,
+} from './api/types';
 
 export function extractUser(user): FullUser {
   return {
@@ -28,4 +35,18 @@ export function extractRepos(repos: any[]): Repo[] {
       description: repo.description,
     };
   });
+}
+
+export function groupReposByYear(repos: RepoAndDate[]) {
+  const grouped: RepoAndDateOrNumber[] = [];
+
+  for (const repo of repos) {
+    if (!grouped.includes(repo.year)) {
+      grouped.push(repo.year);
+    } else {
+      grouped.push(repo);
+    }
+  }
+
+  return grouped;
 }
