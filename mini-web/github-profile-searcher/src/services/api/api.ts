@@ -11,7 +11,11 @@ export class API {
       if (isAxiosError(err)) {
         if (err.response) {
           console.log(err.response.data);
-          return err.response.data;
+          return {
+            statusCode: err.response.status,
+            error: err.message,
+            data: err.response.data,
+          };
         } else {
           console.log({ error: 'Unknown error', message: err.message });
           return { error: 'Unkown error', message: err.message };
@@ -22,5 +26,13 @@ export class API {
 
   static async user(username: string) {
     return await this.sendGet(`/users/${username}`);
+  }
+
+  static async userRepos(username: string) {
+    return await this.sendGet(`/users/${username}/repos`);
+  }
+
+  static async userFollowers(username: string) {
+    return await this.sendGet(`/users/${username}/followers`);
   }
 }
