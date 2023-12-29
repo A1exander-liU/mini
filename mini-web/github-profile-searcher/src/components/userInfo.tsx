@@ -80,8 +80,6 @@ function RepoTimeline({ repos }: RepoProps) {
     };
   });
 
-  console.log(repositories);
-
   const grouped = groupReposByYear(repositories);
   const repoCountByYear = reposByYearCount(repositories);
 
