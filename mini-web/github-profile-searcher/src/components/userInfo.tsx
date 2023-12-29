@@ -1,5 +1,14 @@
 import { Avatar, Box, Chip, Paper, Stack, Typography } from '@mui/material';
-import { FullInfo, FullUser } from '../services/api/types';
+import { FullInfo, FullUser, Repo } from '../services/api/types';
+import type {} from '@mui/lab/themeAugmentation';
+import {
+  Timeline,
+  TimelineConnector,
+  TimelineContent,
+  TimelineDot,
+  TimelineItem,
+  TimelineSeparator,
+} from '@mui/lab';
 
 interface Props {
   info: FullInfo;
@@ -7,6 +16,10 @@ interface Props {
 
 interface FullUserProps {
   user: FullUser;
+}
+
+interface RepoProps {
+  repos: Repo[];
 }
 
 function UserInfoHeader({ user }: FullUserProps) {
@@ -32,6 +45,42 @@ function UserInfoHeader({ user }: FullUserProps) {
   );
 }
 
+function RepoTimeline({ repos }: RepoProps) {
+  repos.sort((a, b) => {
+    return new Date(a.createdAt).valueOf() - new Date(b.createdAt).valueOf();
+  });
+  for (const repo of repos) {
+    const date = new Date(repo.createdAt);
+
+    const year = date.getUTCFullYear();
+    const month = date.getUTCMonth() + 1;
+    const day = date.getUTCDate();
+
+    console.log(repo.name, year, month, day);
+  }
+
+  return (
+    <>
+      <Box>
+        <Typography variant='h6'>Timeline</Typography>
+        <Timeline>
+          {repos.map((repo, index) => {
+            return (
+              <TimelineItem key={repo.name}>
+                <TimelineSeparator>
+                  <TimelineDot />
+                  {index != repos.length - 1 ? <TimelineConnector /> : <></>}
+                </TimelineSeparator>
+                <TimelineContent>{repo.name}</TimelineContent>
+              </TimelineItem>
+            );
+          })}
+        </Timeline>
+      </Box>
+    </>
+  );
+}
+
 export default function UserInfo({ info }: Props) {
   const user = info.user;
   const followers = info.followers;
@@ -39,7 +88,10 @@ export default function UserInfo({ info }: Props) {
 
   return (
     <Paper sx={{ padding: '1rem' }}>
-      <UserInfoHeader user={user} />
+      <Stack direction={'column'} spacing={2}>
+        <UserInfoHeader user={user} />
+        <RepoTimeline repos={repos} />
+      </Stack>
     </Paper>
   );
 }
