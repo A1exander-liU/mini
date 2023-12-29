@@ -1,4 +1,3 @@
-import { group } from 'console';
 import {
   FullUser,
   Repo,
@@ -18,7 +17,7 @@ export function extractUser(user): FullUser {
   };
 }
 
-export function extractFollowers(followers: any[]): User[] {
+export function extractFollowers(followers): User[] {
   return followers.map((follower) => {
     return {
       username: follower.login,
@@ -27,7 +26,7 @@ export function extractFollowers(followers: any[]): User[] {
   });
 }
 
-export function extractRepos(repos: any[]): Repo[] {
+export function extractRepos(repos): Repo[] {
   return repos.map((repo) => {
     return {
       name: repo.name,
