@@ -28,4 +28,8 @@ export type RepoAndDate = {
   day: number;
 } & Repo;
 
+export type RepoCountByYear = {
+  [key: number]: number;
+};
+
 export type RepoAndDateOrNumber = RepoAndDate | number;
