@@ -1,1 +1,14 @@
-<p>home works!</p>
+<div class="px-2 py-3 min-h-screen max-h-fit">
+  <h1 class="dark:text-white font-bold text-xl mb-10">
+    Top Products of the Month
+  </h1>
+  @for (product of products; track product.id) {
+  <div class="bg-white dark:bg-slate-700 p-2 my-2 rounded-sm min-h-24">
+    <p class="dark:text-white">{{ product.name }}</p>
+    <img src="https://picsum.photos/100" />
+    <p class="text-slate-500 dark:text-slate-400">
+      {{ product.description }}
+    </p>
+  </div>
+  }
+</div>
