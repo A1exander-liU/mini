@@ -8,12 +8,14 @@ datasource db {
 }
 
 model users {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  username  String   @unique
-  hash      String
-  createdat DateTime @default(now()) @db.Timestamptz(6)
-  updatedat DateTime @default(now()) @db.Timestamptz(6)
+  id             Int              @id @default(autoincrement())
+  email          String           @unique
+  username       String           @unique
+  hash           String
+  createdat      DateTime         @default(now()) @db.Timestamptz(6)
+  updatedat      DateTime         @default(now()) @db.Timestamptz(6)
+  orders         orders[]
+  shopping_carts shopping_carts[]
 }
 
 model balls {
@@ -48,16 +50,51 @@ model medicines {
 }
 
 model products {
-  id           Int               @id @default(autoincrement())
-  name         String?           @unique @db.VarChar(100)
-  description  String?
-  imageurl     String?
-  category     product_category?
-  price        Decimal?          @db.Money
-  balls        balls?
-  collectibles collectibles?
-  held_items   held_items?
-  medicines    medicines?
+  id             Int               @id @default(autoincrement())
+  name           String?           @unique @db.VarChar(100)
+  description    String?
+  imageurl       String?
+  category       product_category?
+  price          Decimal?          @db.Money
+  balls          balls?
+  collectibles   collectibles?
+  held_items     held_items?
+  medicines      medicines?
+  order_items    order_items[]
+  shopping_carts shopping_carts[]
+}
+
+model order_items {
+  id        Int      @id @default(autoincrement())
+  orderid   Int      @default(autoincrement())
+  productid Int      @default(autoincrement())
+  quantity  Int?     @default(0)
+  orders    orders   @relation(fields: [orderid], references: [id], onDelete: Cascade)
+  products  products @relation(fields: [productid], references: [id], onUpdate: NoAction)
+}
+
+model orders {
+  id          Int           @id @default(autoincrement())
+  userid      Int           @default(autoincrement())
+  createdat   DateTime?     @default(now()) @db.Timestamp(6)
+  address     String?
+  city        String?
+  region      String?
+  country     String?
+  postal_code String?
+  order_items order_items[]
+  users       users         @relation(fields: [userid], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model shopping_carts {
+  id        Int      @id @default(autoincrement())
+  userid    Int      @default(autoincrement())
+  productid Int      @default(autoincrement())
+  quantity  Int?     @default(0)
+  products  products @relation(fields: [productid], references: [id], onDelete: Cascade)
+  users     users    @relation(fields: [userid], references: [id], onDelete: Cascade)
+
+  @@unique([userid, productid])
 }
 
 enum catch_advantage {
