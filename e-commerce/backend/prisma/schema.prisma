@@ -15,3 +15,98 @@ model users {
   createdat DateTime @default(now()) @db.Timestamptz(6)
   updatedat DateTime @default(now()) @db.Timestamptz(6)
 }
+
+model balls {
+  id                  Int              @id @default(autoincrement())
+  catch_power         Int?             @default(0)
+  boosted_catch_power Int?             @default(0)
+  advantage           catch_advantage? @default(none)
+  products            products         @relation(fields: [id], references: [id], onDelete: Cascade)
+}
+
+model collectibles {
+  id        Int                 @id @default(autoincrement())
+  rarity    collectible_rarity? @default(common)
+  tradeable Boolean?            @default(false)
+  products  products            @relation(fields: [id], references: [id], onDelete: Cascade)
+}
+
+model held_items {
+  id         Int                   @id @default(autoincrement())
+  target     held_item_target?
+  effect     held_item_effect?
+  activation held_item_activation? @default(passive)
+  products   products              @relation(fields: [id], references: [id], onDelete: Cascade)
+}
+
+model medicines {
+  id              Int             @id @default(autoincrement())
+  health_recovery Int?            @default(0)
+  pp_recovery     Int?            @default(0)
+  cures           medicine_cures? @default(none)
+  products        products        @relation(fields: [id], references: [id], onDelete: Cascade)
+}
+
+model products {
+  id           Int               @id @default(autoincrement())
+  name         String?           @unique @db.VarChar(100)
+  description  String?
+  imageurl     String?
+  category     product_category?
+  price        Decimal?          @db.Money
+  balls        balls?
+  collectibles collectibles?
+  held_items   held_items?
+  medicines    medicines?
+}
+
+enum catch_advantage {
+  turn
+  species
+  type
+  always
+  none
+}
+
+enum collectible_rarity {
+  common
+  rare
+  very_rare @map("very rare")
+  legendary
+}
+
+enum held_item_activation {
+  turn_start @map("turn start")
+  turn_end   @map("turn end")
+  self_hit   @map("self hit")
+  enemy_hit  @map("enemy hit")
+  passive
+}
+
+enum held_item_effect {
+  stat
+  recovery
+  out_of_battle @map("out of battle")
+  turn
+}
+
+enum held_item_target {
+  self
+  enemy
+}
+
+enum medicine_cures {
+  paralysis
+  burn
+  sleep
+  frozen
+  none
+  all
+}
+
+enum product_category {
+  medicine
+  collectible
+  held_item   @map("held item")
+  ball
+}
