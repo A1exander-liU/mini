@@ -1,14 +1,16 @@
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   HttpStatus,
   Post,
+  Req,
   Res,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dtos/login.dto';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { Public } from './auth.metadata';
 
 @Controller('auth')
@@ -25,5 +27,15 @@ export class AuthController {
     const token = await this.auth.login(dto.username, dto.password);
     res.cookie('token', token, { httpOnly: true, secure: true, path: '/api' });
     return { statusCode: 200, message: 'Sucessfully logged in' };
+  }
+
+  @Get('me')
+  me(@Req() req: Request) {
+    const user = req['user'];
+    return {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+    };
   }
 }
