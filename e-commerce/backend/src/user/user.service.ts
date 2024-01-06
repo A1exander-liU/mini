@@ -1,9 +1,11 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { genSalt, hash } from 'bcrypt';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class UserService {
+  private logger = new Logger(UserService.name);
+
   constructor(private readonly prisma: PrismaService) {}
 
   async register(email: string, username: string, password: string) {
@@ -11,7 +13,7 @@ export class UserService {
       where: { email, username },
     });
 
-    if (!user) {
+    if (user) {
       throw new BadRequestException('User already exists');
     }
 
