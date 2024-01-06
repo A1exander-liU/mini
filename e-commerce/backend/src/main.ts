@@ -23,6 +23,6 @@ async function bootstrap() {
   app.use(cookieParser());
 
   const PORT = process.env.PORT || 3000;
-  await app.listen(PORT);
+  await app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
 }
 bootstrap();
