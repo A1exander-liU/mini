@@ -1,6 +1,7 @@
 import {
   Controller,
   Delete,
+  Get,
   Logger,
   Param,
   Patch,
@@ -43,5 +44,10 @@ export class CartController {
   @Delete(':productId')
   deleteFromCart(@Param() params: AddToCartDto, @User() user: users) {
     return this.cart.deleteFromCart(user.id, parseInt(params.productId));
+  }
+
+  @Get()
+  getCartItems(@User() user: users) {
+    return this.cart.getCartItems(user.id);
   }
 }

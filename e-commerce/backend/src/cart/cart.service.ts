@@ -41,7 +41,12 @@ export class CartService {
         statusCode: 200,
         message: 'Deleted item from cart',
       };
-    } catch (err) {}
+    } catch (err) {
+      this.logger.log(err.code);
+      if (err.code === 'P2025') {
+        throw new BadRequestException("Product is not in user's shopping cart");
+      }
+    }
   }
 
   async updateCartItemAmount(
@@ -67,8 +72,21 @@ export class CartService {
         throw new BadRequestException(
           `Product with id: ${productId} does not exist`,
         );
+      } else if (err.code === 'P2025') {
+        throw new BadRequestException("Product is not in user's cart");
       }
       throw new InternalServerErrorException(err.message);
     }
+  }
+
+  async getCartItems(userId: number) {
+    const cartItems = await this.prisma.shopping_carts.findMany({
+      where: { userid: userId },
+    });
+    return {
+      statusCode: 200,
+      message: `${cartItems.length} items found in cart`,
+      cart: cartItems,
+    };
   }
 }
