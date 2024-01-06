@@ -13,7 +13,10 @@ import { LoginDto } from './dtos/login.dto';
 import { Request, Response } from 'express';
 import { Public } from './auth.metadata';
 
-@Controller('auth')
+@Controller({
+  path: 'auth',
+  version: '1',
+})
 export class AuthController {
   constructor(private readonly auth: AuthService) {}
 

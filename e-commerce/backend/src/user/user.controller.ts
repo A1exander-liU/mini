@@ -3,7 +3,10 @@ import { RegisterDto } from './dtos/register.dto';
 import { UserService } from './user.service';
 import { Public } from 'src/auth/auth.metadata';
 
-@Controller('user')
+@Controller({
+  path: 'user',
+  version: '1',
+})
 export class UserController {
   constructor(private readonly user: UserService) {}
 
