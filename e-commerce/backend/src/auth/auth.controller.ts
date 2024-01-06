@@ -4,7 +4,6 @@ import {
   Get,
   HttpCode,
   HttpStatus,
-  Logger,
   Post,
   Req,
   Res,
@@ -19,8 +18,6 @@ import { Public } from './auth.metadata';
   version: '1',
 })
 export class AuthController {
-  private logger = new Logger(AuthController.name);
-
   constructor(private readonly auth: AuthService) {}
 
   @Public()
@@ -31,10 +28,9 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response,
   ) {
     const token = await this.auth.login(dto.username, dto.password);
-    this.logger.log(token);
     res.cookie('token', token, {
       httpOnly: true,
-      secure: true,
+      // secure: true,
       path: '/api',
       maxAge: 60 * 60 * 1000,
     });
