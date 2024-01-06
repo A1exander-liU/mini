@@ -3,15 +3,16 @@ import {
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
+import { product_category } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ProductService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async allProducts() {
+  async allProducts(category?: product_category) {
     try {
-      return await this.prisma.products.findMany();
+      return await this.prisma.products.findMany({ where: { category } });
     } catch (err) {
       throw new InternalServerErrorException(err.message);
     }
