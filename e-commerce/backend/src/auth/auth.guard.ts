@@ -10,6 +10,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Observable } from 'rxjs';
 import { PUBLIC_KEY, ROLES_KEY } from './auth.metadata';
 import { Request } from 'express';
+import { BlacklistService } from 'src/blacklist/blacklist.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -17,6 +18,7 @@ export class AuthGuard implements CanActivate {
     private readonly reflector: Reflector,
     private readonly jwt: JwtService,
     private readonly config: ConfigService,
+    private readonly blacklist: BlacklistService,
   ) {}
 
   canActivate(
@@ -38,6 +40,11 @@ export class AuthGuard implements CanActivate {
       const payload = this.jwt.verify(token, {
         secret: this.config.get('JWT_SECRET'),
       });
+
+      if (this.blacklist.isBlacklistedToken(token)) {
+        throw new UnauthorizedException('token is expired');
+      }
+
       request['user'] = payload;
       return true;
     } catch (err) {
