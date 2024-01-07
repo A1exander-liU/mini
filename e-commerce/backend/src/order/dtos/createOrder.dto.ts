@@ -2,6 +2,7 @@ import { Type } from 'class-transformer';
 import {
   IsArray,
   IsNumber,
+  IsOptional,
   IsPositive,
   IsPostalCode,
   IsString,
@@ -16,12 +17,14 @@ export class CreateOrderDto {
   city: string;
 
   @IsString()
+  @IsOptional()
   region: string;
 
   @IsString()
   country: string;
 
   @IsPostalCode('any')
+  @IsOptional()
   postalCode: string;
 
   @IsArray()
