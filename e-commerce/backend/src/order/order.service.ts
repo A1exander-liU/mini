@@ -1,4 +1,9 @@
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateOrderDto } from './dtos/createOrder.dto';
 
@@ -78,21 +83,29 @@ export class OrderService {
   }
 
   async createOrder(orderDetails: CreateOrderDto, userId: number) {
-    await this.prisma.orders.create({
-      data: {
-        userid: userId,
-        address: orderDetails.address,
-        city: orderDetails.city,
-        region: orderDetails.region,
-        country: orderDetails.city,
-        postal_code: orderDetails.postalCode,
-        order_items: {
-          create: orderDetails.orderItems.map((item) => {
-            return { productid: item.productId, quantity: item.quantity };
-          }),
+    try {
+      await this.prisma.orders.create({
+        data: {
+          userid: userId,
+          address: orderDetails.address,
+          city: orderDetails.city,
+          region: orderDetails.region,
+          country: orderDetails.city,
+          postal_code: orderDetails.postalCode,
+          order_items: {
+            create: orderDetails.orderItems.map((item) => {
+              return { productid: item.productId, quantity: item.quantity };
+            }),
+          },
         },
-      },
-    });
+      });
+    } catch (err) {
+      if (err.code === 'P2003') {
+        throw new BadRequestException(
+          `Order contains products that don't exist`,
+        );
+      }
+    }
     return { statusCode: 201, message: 'Created new order' };
   }
 }
