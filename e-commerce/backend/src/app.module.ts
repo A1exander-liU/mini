@@ -10,6 +10,7 @@ import { ProductModule } from './product/product.module';
 import { CartModule } from './cart/cart.module';
 import { OrderModule } from './order/order.module';
 import { RedisModule } from './redis/redis.module';
+import { BlacklistModule } from './blacklist/blacklist.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { RedisModule } from './redis/redis.module';
     CartModule,
     OrderModule,
     RedisModule,
+    BlacklistModule,
   ],
   controllers: [],
   providers: [
