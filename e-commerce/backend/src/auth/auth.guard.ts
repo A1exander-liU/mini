@@ -21,9 +21,7 @@ export class AuthGuard implements CanActivate {
     private readonly blacklist: BlacklistService,
   ) {}
 
-  canActivate(
-    context: ExecutionContext,
-  ): boolean | Promise<boolean> | Observable<boolean> {
+  async canActivate(context: ExecutionContext): Promise<boolean> {
     const isPublic = this.reflector.getAllAndOverride<boolean>(PUBLIC_KEY, [
       context.getClass(),
       context.getHandler(),
@@ -41,7 +39,8 @@ export class AuthGuard implements CanActivate {
         secret: this.config.get('JWT_SECRET'),
       });
 
-      if (this.blacklist.isBlacklistedToken(token)) {
+      const isBlacklisted = await this.blacklist.isBlacklistedToken(token);
+      if (isBlacklisted) {
         throw new UnauthorizedException('token is expired');
       }
 
