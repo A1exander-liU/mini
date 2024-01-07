@@ -1,5 +1,5 @@
 <div
-  class="dark:bg-slate-800 dark:text-white h-12 px-2 flex items-center sticky top-0 z-50 shadow-lg"
+  class="sticky top-0 left-0 z-50 flex items-center w-full shadow-lg bg-white dark:bg-slate-800 dark:text-white h-12 px-2"
 >
   <a routerLink="">
     <svg
@@ -20,9 +20,11 @@
 
   <button (click)="theme.toggleTheme()">Theme</button>
 
-  <a routerLink="/home" class="mx-2 flex-grow">
+  <a routerLink="/home" class="mx-2">
     <p>E-Commerce</p>
   </a>
+
+  <div class="flex-grow"></div>
 
   <a routerLink="/profile" class="mx-3">
     <svg
