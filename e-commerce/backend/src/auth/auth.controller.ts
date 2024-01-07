@@ -37,6 +37,11 @@ export class AuthController {
     return { statusCode: 200, message: 'Sucessfully logged in' };
   }
 
+  @Get('logout')
+  logout(@Req() req: Request) {
+    return this.auth.logout(req.cookies.token);
+  }
+
   @Get('me')
   me(@Req() req: Request) {
     const user = req['user'];
