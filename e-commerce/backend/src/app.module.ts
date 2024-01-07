@@ -9,6 +9,7 @@ import { AuthGuard, RoleGuard } from './auth/auth.guard';
 import { ProductModule } from './product/product.module';
 import { CartModule } from './cart/cart.module';
 import { OrderModule } from './order/order.module';
+import { RedisModule } from './redis/redis.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { OrderModule } from './order/order.module';
     ProductModule,
     CartModule,
     OrderModule,
+    RedisModule,
   ],
   controllers: [],
   providers: [
