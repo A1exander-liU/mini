@@ -1,8 +1,9 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { users } from '@prisma/client';
 import { User } from 'src/user/user.decorator';
 import { OrderService } from './order.service';
 import { OrderIdDto } from './dtos/orderId.dto';
+import { CreateOrderDto } from './dtos/createOrder.dto';
 
 @Controller({
   path: 'orders',
@@ -19,5 +20,10 @@ export class OrderController {
   @Get(':orderId')
   oneOrder(@Param() params: OrderIdDto, @User() user: users) {
     return this.order.oneOrder(user.id, parseInt(params.orderId));
+  }
+
+  @Post()
+  createOrder(@Body() dto: CreateOrderDto, @User() user: users) {
+    return this.order.createOrder(dto, user.id);
   }
 }
