@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BaseRes, LoginReq, MeRes } from './types';
+import { BaseRes, ErrorRes, LoginReq, MeRes } from './types';
+import { catchError, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -10,10 +11,20 @@ export class ApiService {
 
   constructor(private readonly client: HttpClient) {}
 
-  private get<T>(url: string, options?: Parameters<typeof this.client.get>[1]) {
-    return this.client.get<T>(this.baseUrl + url, {
-      ...options,
-      withCredentials: true,
+  private async get<T>(
+    url: string,
+    options?: Parameters<typeof this.client.get>[1]
+  ): Promise<T> {
+    return new Promise((resolve, reject) => {
+      this.client
+        .get<T>(this.baseUrl + url, {
+          ...options,
+          withCredentials: true,
+        })
+        .subscribe({
+          next: (data) => resolve(data),
+          error: (err: HttpErrorResponse) => reject(err),
+        });
     });
   }
 
@@ -21,10 +32,17 @@ export class ApiService {
     url: string,
     body: any,
     options?: Parameters<typeof this.client.post>[2]
-  ) {
-    return this.client.post<T>(this.baseUrl + url, body, {
-      ...options,
-      withCredentials: true,
+  ): Promise<T> {
+    return new Promise((resolve, reject) => {
+      this.client
+        .post<T>(this.baseUrl + url, body, {
+          ...options,
+          withCredentials: true,
+        })
+        .subscribe({
+          next: (data) => resolve(data),
+          error: (err: HttpErrorResponse) => reject(err),
+        });
     });
   }
 
@@ -32,10 +50,14 @@ export class ApiService {
     url: string,
     body: any,
     options?: Parameters<typeof this.client.put>[2]
-  ) {
-    return this.client.put<T>(this.baseUrl + url, body, {
-      ...options,
-      withCredentials: true,
+  ): Promise<T> {
+    return new Promise((resolve, reject) => {
+      this.client
+        .put<T>(this.baseUrl + url, body, { ...options, withCredentials: true })
+        .subscribe({
+          next: (data) => resolve(data),
+          error: (err: HttpErrorResponse) => reject(err),
+        });
     });
   }
 
@@ -44,28 +66,34 @@ export class ApiService {
     body: any,
     options?: Parameters<typeof this.client.patch>[2]
   ) {
-    return this.client.patch<T>(this.baseUrl + url, body, {
-      ...options,
-      withCredentials: true,
+    return new Promise((resolve, reject) => {
+      this.client
+        .patch<T>(this.baseUrl + url, body, {
+          ...options,
+          withCredentials: true,
+        })
+        .subscribe({
+          next: (data) => resolve(data),
+          error: (err: HttpErrorResponse) => reject(err),
+        });
     });
   }
 
   private delete<T>(
     url: string,
     options?: Parameters<typeof this.client.delete>[1]
-  ) {
-    return this.client.delete<T>(this.baseUrl + url, {
-      ...options,
-      withCredentials: true,
+  ): Promise<T> {
+    return new Promise((resolve, reject) => {
+      this.client
+        .delete<T>(this.baseUrl + url, { ...options, withCredentials: true })
+        .subscribe({
+          next: (data) => resolve(data),
+          error: (err: HttpErrorResponse) => reject(err),
+        });
     });
   }
 
-  login(req: LoginReq) {
-    this.post<BaseRes>('/v1/auth/login', req).subscribe((res) => {
-      this.get<MeRes>('/v1/auth/me').subscribe((res) => {
-        console.log(res);
-      });
-      console.log(res);
-    });
+  async login(req: LoginReq) {
+    return this.post<BaseRes>('/v1/auth/login', req);
   }
 }
