@@ -13,6 +13,7 @@ export class ReplacePipe implements PipeTransform {
     if (!value) {
       return '';
     }
-    return value.replace(searchValue, replaceValue);
+    const regex = new RegExp(searchValue, 'g');
+    return value.replace(regex, replaceValue);
   }
 }
