@@ -1,33 +1,27 @@
 <div class="px-2 py-3 min-h-screen max-h-fit">
-  <div class="flex-grow">
-    <h1 class="text-xl font-bold dark:text-white text-center">
-      {{ product?.name | titlecase }}
-    </h1>
-    <div class="flex justify-center mt-6 mb-3">
-      <img
-        src="{{ product?.imageurl }}"
-        class="w-1/2 rounded-full bg-slate-300 dark:bg-slate-700"
-      />
-    </div>
+  <h1 class="text-xl font-bold dark:text-white text-center">
+    {{ product?.name | titlecase }}
+  </h1>
+  <div class="flex justify-center mt-6 mb-3">
+    <img
+      src="{{ product?.imageurl }}"
+      class="w-1/2 rounded-full bg-slate-300 dark:bg-slate-700"
+    />
   </div>
   <div>
     <div
-      class="dark:text-white font-bold text-center bg-slate-300 dark:bg-slate-700 p-3 rounded-sm"
+      class="dark:text-white text-center bg-slate-300 dark:bg-slate-700 p-3 rounded-sm mb-4"
     >
-      <p>Cures {{ product?.details?.cures }}</p>
-      <p class="flex items-center justify-center">
+      <p class="font-bold">Cures {{ product?.details?.cures }}</p>
+      <p class="font-bold flex items-center justify-center">
         <span class="material-symbols-outlined mr-1"> favorite </span>
         {{ product?.details?.health_recovery }}
       </p>
-      <p class="flex items-center justify-center">
+      <p class="font-bold flex items-center justify-center">
         <span class="material-symbols-outlined mr-1"> bolt </span
         >{{ product?.details?.pp_recovery }}
       </p>
-    </div>
-    <div
-      class="text-center dark:text-white bg-slate-300 dark:bg-slate-700 p-3 rounded-sm mb-4"
-    >
-      {{ product?.description }}
+      <p class="mt-4">{{ product?.description }}</p>
     </div>
     <div class="flex justify-end">
       <p
