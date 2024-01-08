@@ -1,0 +1,13 @@
+<div class="flex space-x-2 items-center">
+  <button
+    (click)="handleThemeChange()"
+    class="flex justify-center items-center"
+  >
+    <span class="material-symbols-outlined text-center"> {{ mode }} </span>
+  </button>
+
+  <span class="material-symbols-outlined"> category </span>
+
+  <app-profile-menu [loggedIn]="loggedIn"></app-profile-menu>
+  <app-login-logout-menu [loggedIn]="loggedIn"></app-login-logout-menu>
+</div>
