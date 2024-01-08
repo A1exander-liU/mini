@@ -18,7 +18,8 @@
           {{ product?.details?.effect | replace : "_" : " " | titlecase }}
         </p>
         <p class="font-bold flex items-center justify-center">
-          Activation: {{ product?.details?.activation | titlecase }}
+          Activation:
+          {{ product?.details?.activation | replace : "_" : " " | titlecase }}
         </p>
         <p class="font-bold flex items-center justify-center">
           Target:
