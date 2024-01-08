@@ -1,29 +1,11 @@
 <div
   class="sticky top-0 left-0 z-50 flex items-center w-full shadow-lg bg-white dark:bg-slate-800 dark:text-white h-12 px-2 md:h-14 lg:h-16 md:text-xl"
 >
-  <button
-    (click)="handleThemeChange()"
-    class="flex justify-center items-center"
-  >
-    <span class="material-symbols-outlined text-center"> {{ mode }} </span>
-  </button>
-
   <a routerLink="/home" class="mx-2 font-bold">
     <p>E-Commerce</p>
   </a>
 
   <div class="flex-grow"></div>
 
-  <div class="flex space-x-3">
-    <span routerLink="/profile" class="material-symbols-outlined">
-      person
-    </span>
-
-    <span
-      (click)="logout()"
-      class="material-symbols-outlined text-center rounded-full"
-    >
-      logout
-    </span>
-  </div>
+  <app-menu></app-menu>
 </div>
