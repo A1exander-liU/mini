@@ -93,7 +93,7 @@ export class ApiService {
     });
   }
 
-  async login(req: LoginReq) {
+  async login(req: LoginReq): Promise<BaseRes> {
     return this.post<BaseRes>('/v1/auth/login', req);
   }
 }
