@@ -2,7 +2,7 @@
   <h1 class="dark:text-white font-bold text-xl mb-10">
     Top Products of the Month
   </h1>
-  <div class="flex flex-col space-y-2">
+  <div class="grid xl:grid-cols-6 lg:grid-cols-4 md:grid-cols-2 gap-2">
     @for (product of products; track product.id) {
     <app-product [product]="product"></app-product>
     }
