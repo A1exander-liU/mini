@@ -79,3 +79,11 @@ export type Ball = {
   boosted_catch_power: number;
   advantage: CatchAdvantage;
 };
+
+type ProductTypes = Medicine | Collectible | HeldItem | Ball;
+
+export type FullProduct<T extends ProductTypes = ProductTypes> = Product & {
+  details: T;
+};
+
+export type OneProductRes = BaseRes & { product: FullProduct };
