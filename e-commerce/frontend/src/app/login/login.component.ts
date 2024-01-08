@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { ApiService } from '../api/api.service';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,7 @@ export class LoginComponent {
   usernameError = '';
   passwordError = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private readonly api: ApiService) {}
 
   showDetails() {
     console.log(this.loginForm.value);
@@ -49,6 +50,10 @@ export class LoginComponent {
     this.showErrorMessages();
 
     if (this.loginForm.status === 'VALID') {
+      this.api.login({
+        username: this.loginForm.value.username!,
+        password: this.loginForm.value.password!,
+      });
       this.router.navigate(['/']);
     }
   }
