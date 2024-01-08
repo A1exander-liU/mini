@@ -96,4 +96,12 @@ export class ApiService {
   async login(req: LoginReq): Promise<BaseRes> {
     return this.post<BaseRes>('/v1/auth/login', req);
   }
+
+  async me(): Promise<MeRes> {
+    return this.get<MeRes>('/v1/auth/me');
+  }
+
+  async logout(): Promise<BaseRes> {
+    return this.get<BaseRes>('/v1/auth/logout');
+  }
 }
