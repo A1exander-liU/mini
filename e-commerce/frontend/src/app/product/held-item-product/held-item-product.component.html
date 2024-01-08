@@ -14,7 +14,8 @@
         class="dark:text-white text-center bg-slate-300 dark:bg-slate-700 p-3 rounded-sm mb-4"
       >
         <p class="font-bold">
-          Effect: {{ product?.details?.effect | titlecase }}
+          Effect:
+          {{ product?.details?.effect | replace : "_" : " " | titlecase }}
         </p>
         <p class="font-bold flex items-center justify-center">
           Activation: {{ product?.details?.activation | titlecase }}
