@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ThemeService } from '../theme.service';
+import { ApiService } from '../api/api.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,5 +11,13 @@ import { ThemeService } from '../theme.service';
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent {
-  constructor(public readonly theme: ThemeService) {}
+  constructor(
+    public readonly theme: ThemeService,
+    private readonly api: ApiService,
+    private readonly router: Router
+  ) {}
+
+  logout() {
+    this.api.logout().then(() => this.router.navigate(['/login']));
+  }
 }
