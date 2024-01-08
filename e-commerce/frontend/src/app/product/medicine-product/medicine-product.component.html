@@ -1,1 +1,48 @@
-<p>medicine-product works!</p>
+<div class="px-2 py-3 min-h-screen max-h-fit">
+  <div class="flex-grow">
+    <h1 class="text-xl font-bold dark:text-white text-center">
+      {{ product?.name | titlecase }}
+    </h1>
+    <div class="flex justify-center mt-6 mb-3">
+      <img
+        src="{{ product?.imageurl }}"
+        class="w-1/2 rounded-full bg-slate-300 dark:bg-slate-700"
+      />
+    </div>
+  </div>
+  <div>
+    <div
+      class="dark:text-white font-bold text-center bg-slate-300 dark:bg-slate-700 p-3 rounded-sm"
+    >
+      <p>Cures {{ product?.details?.cures }}</p>
+      <p class="flex items-center justify-center">
+        <span class="material-symbols-outlined mr-1"> favorite </span>
+        {{ product?.details?.health_recovery }}
+      </p>
+      <p class="flex items-center justify-center">
+        <span class="material-symbols-outlined mr-1"> bolt </span
+        >{{ product?.details?.pp_recovery }}
+      </p>
+    </div>
+    <div
+      class="text-center dark:text-white bg-slate-300 dark:bg-slate-700 p-3 rounded-sm mb-4"
+    >
+      {{ product?.description }}
+    </div>
+    <div class="flex justify-end">
+      <p
+        class="font-bold text-right dark:text-white bg-slate-300 dark:bg-slate-700 w-fit p-1 rounded-sm"
+      >
+        ${{ product?.price }}
+      </p>
+    </div>
+    <div class="flex flex-col my-4 space-y-2">
+      <button class="text-white bg-slate-700 hover:bg-slate-600 p-1 rounded-sm">
+        Add to Cart
+      </button>
+      <button class="text-white bg-slate-700 hover:bg-slate-600 p-1 rounded-sm">
+        Buy Now
+      </button>
+    </div>
+  </div>
+</div>
