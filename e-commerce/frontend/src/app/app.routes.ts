@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AuthGuard } from './guards/auth.guard';
 import { FullProductComponent } from './product/full-product/full-product.component';
+import { ProductsComponent } from './products/products.component';
 
 export const routes: Routes = [
   {
@@ -32,6 +33,10 @@ export const routes: Routes = [
       {
         path: 'products/:id',
         component: FullProductComponent,
+      },
+      {
+        path: 'products',
+        component: ProductsComponent,
       },
     ],
   },
