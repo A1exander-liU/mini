@@ -11,11 +11,20 @@ import { ApiService } from '../api/api.service';
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent {
+  mode: 'dark_mode' | 'light_mode' = 'dark_mode';
+
   constructor(
     public readonly theme: ThemeService,
     private readonly api: ApiService,
     private readonly router: Router
-  ) {}
+  ) {
+    this.mode = theme.getTheme() === 'dark' ? 'light_mode' : 'dark_mode';
+  }
+
+  handleThemeChange() {
+    this.theme.toggleTheme();
+    this.mode = this.theme.getTheme() === 'dark' ? 'light_mode' : 'dark_mode';
+  }
 
   logout() {
     this.api

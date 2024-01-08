@@ -2,10 +2,10 @@
   class="sticky top-0 left-0 z-50 flex items-center w-full shadow-lg bg-white dark:bg-slate-800 dark:text-white h-12 px-2"
 >
   <button
-    (click)="theme.toggleTheme()"
+    (click)="handleThemeChange()"
     class="flex justify-center items-center"
   >
-    <span class="material-symbols-outlined text-center"> dark_mode </span>
+    <span class="material-symbols-outlined text-center"> {{ mode }} </span>
   </button>
 
   <a routerLink="/home" class="mx-2">
