@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ProductService } from '../product.service';
 
 @Component({
   selector: 'app-home',
@@ -9,9 +8,5 @@ import { ProductService } from '../product.service';
   styleUrl: './home.component.css',
 })
 export class HomeComponent {
-  products;
-
-  constructor(private readonly product: ProductService) {
-    this.products = product.getProducts();
-  }
+  constructor() {}
 }
