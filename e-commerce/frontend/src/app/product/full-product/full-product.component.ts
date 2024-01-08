@@ -41,19 +41,29 @@ export class FullProductComponent implements OnInit {
   getDetails() {
     switch (this.product!.category) {
       case 'medicine': {
-        this.viewContainer.createComponent(MedicineProductComponent);
+        const ref = this.viewContainer.createComponent(
+          MedicineProductComponent
+        );
+        ref.setInput('product', this.product);
         break;
       }
       case 'collectible': {
-        this.viewContainer.createComponent(CollectibleProductComponent);
+        const ref = this.viewContainer.createComponent(
+          CollectibleProductComponent
+        );
+        ref.setInput('product', this.product);
         break;
       }
       case 'held_item': {
-        this.viewContainer.createComponent(HeldItemProductComponent);
+        const ref = this.viewContainer.createComponent(
+          HeldItemProductComponent
+        );
+        ref.setInput('product', this.product);
         break;
       }
       case 'ball': {
-        this.viewContainer.createComponent(BallProductComponent);
+        const ref = this.viewContainer.createComponent(BallProductComponent);
+        ref.setInput('product', this.product);
         break;
       }
     }
