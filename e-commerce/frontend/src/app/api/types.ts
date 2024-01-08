@@ -7,7 +7,7 @@ export type LoginReq = {
 // Types for what data is returned at each endpoint
 export type BaseRes = {
   statusCode: number;
-  message: string;
+  message: string | string[];
 };
 
 export type ErrorRes = {
