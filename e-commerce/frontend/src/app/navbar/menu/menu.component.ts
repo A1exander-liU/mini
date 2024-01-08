@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ThemeService } from '../../theme.service';
 import { ApiService } from '../../api/api.service';
-import { NavigationStart, Router } from '@angular/router';
+import { NavigationStart, Router, RouterLink } from '@angular/router';
 import { ProfileMenuComponent } from './profile-menu/profile-menu.component';
 import { LoginLogoutMenuComponent } from './login-logout-menu/login-logout-menu.component';
 import { filter } from 'rxjs';
@@ -9,7 +9,7 @@ import { filter } from 'rxjs';
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [ProfileMenuComponent, LoginLogoutMenuComponent],
+  imports: [ProfileMenuComponent, LoginLogoutMenuComponent, RouterLink],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css',
 })
