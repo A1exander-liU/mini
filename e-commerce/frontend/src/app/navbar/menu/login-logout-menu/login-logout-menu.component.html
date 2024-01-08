@@ -1,0 +1,17 @@
+@if (loggedIn) {
+
+<span
+  (click)="handleLogout()"
+  class="material-symbols-outlined text-center flex justify-center items-center"
+>
+  logout
+</span>
+} @else {
+
+<span
+  routerLink="/login"
+  class="material-symbols-outlined text-center flex justify-center items-center"
+>
+  login
+</span>
+}
