@@ -18,6 +18,9 @@ export class NavbarComponent {
   ) {}
 
   logout() {
-    this.api.logout().then(() => this.router.navigate(['/login']));
+    this.api
+      .logout()
+      .then(() => this.router.navigate(['/login']))
+      .catch(() => this.router.navigate(['/login']));
   }
 }
