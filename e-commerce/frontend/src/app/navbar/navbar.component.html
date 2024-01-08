@@ -1,7 +1,12 @@
 <div
   class="sticky top-0 left-0 z-50 flex items-center w-full shadow-lg bg-white dark:bg-slate-800 dark:text-white h-12 px-2"
 >
-  <button (click)="theme.toggleTheme()">Theme</button>
+  <button
+    (click)="theme.toggleTheme()"
+    class="flex justify-center items-center"
+  >
+    <span class="material-symbols-outlined text-center"> dark_mode </span>
+  </button>
 
   <a routerLink="/home" class="mx-2">
     <p>E-Commerce</p>
@@ -9,12 +14,16 @@
 
   <div class="flex-grow"></div>
 
-  <span routerLink="/profile" class="material-symbols-outlined"> person </span>
+  <div class="flex space-x-3">
+    <span routerLink="/profile" class="material-symbols-outlined">
+      person
+    </span>
 
-  <span
-    (click)="logout()"
-    class="material-symbols-outlined text-center rounded-full"
-  >
-    logout
-  </span>
+    <span
+      (click)="logout()"
+      class="material-symbols-outlined text-center rounded-full"
+    >
+      logout
+    </span>
+  </div>
 </div>
