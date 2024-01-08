@@ -19,3 +19,19 @@ export type MeRes = {
   username: string;
   email: string;
 };
+
+export type ProductsRes = {
+  products: Product[];
+} & BaseRes;
+
+// Sub types
+export type ProductCategory = 'medicine' | 'collectible' | 'held_item' | 'ball';
+
+export type Product = {
+  id: number;
+  name: string;
+  description: string;
+  imageUrl: string;
+  category: ProductCategory;
+  price: string;
+};

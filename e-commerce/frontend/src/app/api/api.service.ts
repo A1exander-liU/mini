@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BaseRes, LoginReq, MeRes } from './types';
+import { BaseRes, LoginReq, MeRes, ProductsRes } from './types';
 
 @Injectable({
   providedIn: 'root',
@@ -102,5 +102,9 @@ export class ApiService {
 
   async logout(): Promise<BaseRes> {
     return this.get<BaseRes>('/v1/auth/logout');
+  }
+
+  async allProducts(): Promise<ProductsRes> {
+    return this.get<ProductsRes>('/v1/products');
   }
 }
