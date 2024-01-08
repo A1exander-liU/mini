@@ -1,7 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BaseRes, ErrorRes, LoginReq, MeRes } from './types';
-import { catchError, throwError } from 'rxjs';
+import { BaseRes, LoginReq, MeRes } from './types';
 
 @Injectable({
   providedIn: 'root',
