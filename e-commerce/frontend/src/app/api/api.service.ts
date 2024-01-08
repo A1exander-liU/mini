@@ -1,6 +1,13 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BaseRes, LoginReq, MeRes, ProductsRes } from './types';
+import {
+  BaseRes,
+  LoginReq,
+  MeRes,
+  ProductsRes,
+  FullProduct,
+  OneProductRes,
+} from './types';
 
 @Injectable({
   providedIn: 'root',
@@ -106,5 +113,9 @@ export class ApiService {
 
   async allProducts(): Promise<ProductsRes> {
     return this.get<ProductsRes>('/v1/products');
+  }
+
+  async oneProduct(id: number): Promise<OneProductRes> {
+    return this.get<OneProductRes>(`/v1/products/${id}`);
   }
 }
