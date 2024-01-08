@@ -1,12 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { Product } from '../api/types';
-import { TitleCasePipe } from '@angular/common';
+import { CurrencyPipe, TitleCasePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [TitleCasePipe, RouterLink],
+  imports: [TitleCasePipe, CurrencyPipe, RouterLink],
   templateUrl: './product.component.html',
   styleUrl: './product.component.css',
 })

@@ -11,5 +11,7 @@
       class="bg-slate-500 dark:bg-slate-400 w-1/3 p-3 rounded-full"
     />
   </div>
-  <p class="text-right dark:text-white">${{ product?.price }}</p>
+  <p class="text-right dark:text-white">
+    {{ product?.price | currency : "" : "symbol" : "1.2-2" }}
+  </p>
 </div>
