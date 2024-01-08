@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FullProduct, Medicine } from '../../api/types';
-import { TitleCasePipe } from '@angular/common';
+import { Location, TitleCasePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -12,4 +12,10 @@ import { RouterLink } from '@angular/router';
 })
 export class MedicineProductComponent {
   @Input('product') product: FullProduct<Medicine> | undefined;
+
+  constructor(private readonly location: Location) {}
+
+  goBack() {
+    this.location.back();
+  }
 }

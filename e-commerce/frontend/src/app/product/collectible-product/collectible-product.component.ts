@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Collectible, FullProduct } from '../../api/types';
-import { CurrencyPipe, TitleCasePipe } from '@angular/common';
+import { CurrencyPipe, Location, TitleCasePipe } from '@angular/common';
 import { ReplacePipe } from '../../pipes/replace.pipe';
 import { RouterLink } from '@angular/router';
 
@@ -13,4 +13,10 @@ import { RouterLink } from '@angular/router';
 })
 export class CollectibleProductComponent {
   @Input('product') product: FullProduct<Collectible> | undefined;
+
+  constructor(private readonly location: Location) {}
+
+  goBack() {
+    this.location.back();
+  }
 }
