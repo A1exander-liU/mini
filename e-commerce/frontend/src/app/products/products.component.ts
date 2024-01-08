@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ProductComponent } from '../product/product.component';
 import { ApiService } from '../api/api.service';
-import { Product } from '../api/types';
+import { Product, ProductCategory } from '../api/types';
 import { Router } from '@angular/router';
 
 @Component({
@@ -18,7 +18,11 @@ export class ProductsComponent {
     private readonly api: ApiService,
     private readonly router: Router
   ) {
-    api.allProducts().then((res) => {
+    this.getProducts();
+  }
+
+  getProducts(category?: ProductCategory) {
+    this.api.allProducts(category).then((res) => {
       this.products = res.products;
     });
   }

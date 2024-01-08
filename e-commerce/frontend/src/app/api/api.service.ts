@@ -7,6 +7,7 @@ import {
   ProductsRes,
   FullProduct,
   OneProductRes,
+  ProductCategory,
 } from './types';
 
 @Injectable({
@@ -111,8 +112,10 @@ export class ApiService {
     return this.get<BaseRes>('/v1/auth/logout');
   }
 
-  async allProducts(): Promise<ProductsRes> {
-    return this.get<ProductsRes>('/v1/products');
+  async allProducts(category?: ProductCategory): Promise<ProductsRes> {
+    return this.get<ProductsRes>(
+      `/v1/products${category != null ? `?category=${category}` : ''}`
+    );
   }
 
   async oneProduct(id: number): Promise<OneProductRes> {
