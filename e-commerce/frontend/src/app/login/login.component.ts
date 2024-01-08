@@ -7,6 +7,8 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { ApiService } from '../api/api.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorRes } from '../api/types';
 
 @Component({
   selector: 'app-login',
@@ -23,6 +25,7 @@ export class LoginComponent {
 
   usernameError = '';
   passwordError = '';
+  serverError: string | string[] = '';
 
   constructor(private router: Router, private readonly api: ApiService) {}
 
@@ -31,6 +34,7 @@ export class LoginComponent {
   }
 
   showErrorMessages() {
+    this.serverError = '';
     this.usernameError = '';
     this.passwordError = '';
 
@@ -46,15 +50,21 @@ export class LoginComponent {
     }
   }
 
-  handleLogin() {
+  async handleLogin() {
     this.showErrorMessages();
 
     if (this.loginForm.status === 'VALID') {
-      this.api.login({
-        username: this.loginForm.value.username!,
-        password: this.loginForm.value.password!,
-      });
-      this.router.navigate(['/']);
+      try {
+        const res = await this.api.login({
+          username: this.loginForm.value.username!,
+          password: this.loginForm.value.password!,
+        });
+        this.router.navigate(['/']);
+      } catch (err) {
+        if (err instanceof HttpErrorResponse) {
+          this.serverError = (err.error as ErrorRes).message;
+        }
+      }
     }
   }
 }
