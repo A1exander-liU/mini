@@ -6,7 +6,7 @@ import { filter } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService implements OnInit {
+export class AuthService {
   @Output() private _authEvent = new EventEmitter<boolean>();
   private _loggedIn = false;
 
@@ -15,10 +15,7 @@ export class AuthService implements OnInit {
     private readonly router: Router
   ) {
     this.isLoggedIn();
-  }
-
-  ngOnInit(): void {
-    this.router.events
+    router.events
       .pipe(filter((event) => event instanceof NavigationStart))
       .subscribe(() => this.isLoggedIn());
   }
@@ -30,6 +27,7 @@ export class AuthService implements OnInit {
     } catch (err) {
       this._loggedIn = false;
     }
+    console.log(this._loggedIn ? 'Auth: Logged In' : 'Auth: Not logged in');
     this._authEvent.emit(this._loggedIn);
     return this._loggedIn;
   }
