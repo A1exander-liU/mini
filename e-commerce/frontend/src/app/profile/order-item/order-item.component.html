@@ -7,6 +7,11 @@
   <div class="dark:text-white">
     <p class="dark:text-white">{{ order?.city }}, {{ order?.country }}</p>
     <p class="text-slate-600 dark:text-slate-400">{{ order?.address }}</p>
-    <p class="dark:text-white text-right">{{ order?.total | currency }}</p>
+    <p class="dark:text-white text-right text-sm">
+      {{ totalitems }} total items
+    </p>
+    <p class="dark:text-white text-right text-sm font-bold">
+      {{ order?.total | currency }}
+    </p>
   </div>
 </div>

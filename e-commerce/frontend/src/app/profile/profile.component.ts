@@ -12,7 +12,8 @@ import { OrderItemComponent } from './order-item/order-item.component';
 })
 export class ProfileComponent implements OnInit {
   profile: MeRes | undefined;
-  orders: BasicOrder[] | undefined;
+  orders: BasicOrder[] = [];
+  totalItems: number[] = [];
 
   constructor(private readonly api: ApiService) {}
 
@@ -23,6 +24,18 @@ export class ProfileComponent implements OnInit {
 
     this.api.getOrders().then((res) => {
       this.orders = [...res.orders];
+      this.getQuantities();
     });
+  }
+
+  async getQuantities() {
+    for (let i = 0; i < this.orders.length; i++) {
+      const res = await this.api.getOneOrder(this.orders[i].id);
+      let quantity = 0;
+      for (let j = 0; j < res.order.order_items.length; j++) {
+        quantity += res.order.order_items[j].quantity;
+      }
+      this.totalItems.push(quantity);
+    }
   }
 }

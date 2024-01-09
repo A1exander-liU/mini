@@ -11,4 +11,5 @@ import { CurrencyPipe } from '@angular/common';
 })
 export class OrderItemComponent {
   @Input() order: BasicOrder | undefined;
+  @Input() totalitems: number | undefined;
 }
