@@ -13,8 +13,8 @@ import Decimal from 'decimal.js';
 
 export type CartItemUpdateEvent = {
   type: 'inc' | 'dec' | 'remove';
-  userid: number;
   productid: number;
+  price: string;
 };
 
 @Component({
@@ -49,8 +49,8 @@ export class CartItemComponent implements OnChanges {
     this.cartItem!.quantity--;
     this.cartItemUpdated.emit({
       type: 'dec',
-      userid: this.cartItem!.userid,
       productid: this.cartItem!.productid,
+      price: this.getCartItemPrice(),
     });
   }
 
@@ -58,16 +58,16 @@ export class CartItemComponent implements OnChanges {
     this.cartItem!.quantity++;
     this.cartItemUpdated.emit({
       type: 'inc',
-      userid: this.cartItem!.userid,
       productid: this.cartItem!.productid,
+      price: this.getCartItemPrice(),
     });
   }
 
   removeCartItem() {
     this.cartItemUpdated.emit({
       type: 'remove',
-      userid: this.cartItem!.userid,
       productid: this.cartItem!.productid,
+      price: this.getCartItemPrice(),
     });
   }
 

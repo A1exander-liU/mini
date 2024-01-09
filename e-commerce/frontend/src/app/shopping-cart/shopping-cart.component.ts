@@ -5,6 +5,7 @@ import {
   CartItemComponent,
   CartItemUpdateEvent,
 } from './cart-item/cart-item.component';
+import Decimal from 'decimal.js';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -15,6 +16,7 @@ import {
 })
 export class ShoppingCartComponent implements OnInit {
   cartItems: CartItem[] = [];
+  prices: { [productid: string]: string } = {};
 
   constructor(private readonly api: ApiService) {}
 
@@ -25,14 +27,28 @@ export class ShoppingCartComponent implements OnInit {
   getCartItems() {
     this.api.getCartItems().then((res) => {
       this.cartItems = res.cart;
+      this.prices = {};
+      for (let i = 0; i < this.cartItems.length; i++) {
+        this.api.oneProduct(this.cartItems[i].productid).then((res): void => {
+          const price = new Decimal(res.product.price);
+          const quantity = new Decimal(this.cartItems[i].quantity);
+
+          this.prices[this.cartItems[i].productid] = price
+            .mul(quantity)
+            .toDecimalPlaces(2)
+            .toString();
+        });
+      }
     });
   }
 
-  incrementCartItem(productId: number) {
+  incrementCartItem(productId: number, price: string) {
+    this.prices[productId] = price;
     return this.api.updateCartItem(productId, 'inc');
   }
 
-  decrementCartItem(productId: number) {
+  decrementCartItem(productId: number, price: string) {
+    this.prices[productId] = price;
     return this.api.updateCartItem(productId, 'dec');
   }
 
@@ -43,11 +59,11 @@ export class ShoppingCartComponent implements OnInit {
   async handleEvents(event: CartItemUpdateEvent) {
     switch (event.type) {
       case 'inc': {
-        await this.incrementCartItem(event.productid);
+        await this.incrementCartItem(event.productid, event.price);
         break;
       }
       case 'dec': {
-        await this.decrementCartItem(event.productid);
+        await this.decrementCartItem(event.productid, event.price);
         break;
       }
       case 'remove': {
