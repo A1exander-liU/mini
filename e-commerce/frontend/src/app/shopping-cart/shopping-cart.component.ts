@@ -6,11 +6,12 @@ import {
   CartItemUpdateEvent,
 } from './cart-item/cart-item.component';
 import Decimal from 'decimal.js';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-shopping-cart',
   standalone: true,
-  imports: [CartItemComponent],
+  imports: [CartItemComponent, CurrencyPipe],
   templateUrl: './shopping-cart.component.html',
   styleUrl: './shopping-cart.component.css',
 })
@@ -72,5 +73,27 @@ export class ShoppingCartComponent implements OnInit {
         break;
       }
     }
+  }
+
+  subTotal() {
+    let subTotal = new Decimal('0.00');
+    for (const price in this.prices) {
+      subTotal = subTotal.plus(new Decimal(this.prices[price]));
+    }
+    return subTotal.toDecimalPlaces(2).toString();
+  }
+
+  tax(percentage: number) {
+    return new Decimal(this.subTotal())
+      .mul(percentage)
+      .toDecimalPlaces(2)
+      .toString();
+  }
+
+  total(percentage: number) {
+    return new Decimal(this.subTotal())
+      .plus(this.tax(percentage))
+      .toDecimalPlaces(2)
+      .toString();
   }
 }
