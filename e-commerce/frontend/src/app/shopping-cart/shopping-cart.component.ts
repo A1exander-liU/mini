@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api/api.service';
-import { CartItem } from '../api/types';
+import { CartItem, OrderItem } from '../api/types';
 import {
   CartItemComponent,
   CartItemUpdateEvent,
@@ -77,7 +77,20 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   handleOrderEvent(event: OrderEvent) {
-    console.log(event);
+    const orderItems: OrderItem[] = [];
+    for (const item in this.cartItems) {
+      orderItems.push({
+        productId: this.cartItems[item].productid,
+        quantity: this.cartItems[item].quantity,
+      });
+    }
+    if (event.postalCode === '') {
+      event.postalCode = null;
+    }
+    this.api
+      .createOrder({ ...event, orderItems })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   }
 
   subTotal() {
