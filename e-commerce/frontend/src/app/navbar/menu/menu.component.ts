@@ -4,11 +4,17 @@ import { RouterLink } from '@angular/router';
 import { ProfileMenuComponent } from './profile-menu/profile-menu.component';
 import { LoginLogoutMenuComponent } from './login-logout-menu/login-logout-menu.component';
 import { AuthService } from '../../services/auth.service';
+import { CartMenuComponent } from './cart-menu/cart-menu.component';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [ProfileMenuComponent, LoginLogoutMenuComponent, RouterLink],
+  imports: [
+    ProfileMenuComponent,
+    LoginLogoutMenuComponent,
+    CartMenuComponent,
+    RouterLink,
+  ],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css',
 })
