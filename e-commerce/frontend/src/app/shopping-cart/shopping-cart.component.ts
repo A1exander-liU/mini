@@ -28,7 +28,35 @@ export class ShoppingCartComponent implements OnInit {
     });
   }
 
-  handleEvents(event: CartItemUpdateEvent) {
-    console.log(event);
+  incrementCartItem(productId: number) {
+    return this.api.updateCartItem(productId, 'inc');
+  }
+
+  decrementCartItem(productId: number) {
+    return this.api.updateCartItem(productId, 'dec');
+  }
+
+  removeCartItem(productId: number) {
+    return this.api.removeFromCart(productId);
+  }
+
+  async handleEvents(event: CartItemUpdateEvent) {
+    switch (event.type) {
+      case 'inc': {
+        await this.incrementCartItem(event.productid);
+        this.getCartItems();
+        break;
+      }
+      case 'dec': {
+        await this.decrementCartItem(event.productid);
+        this.getCartItems();
+        break;
+      }
+      case 'remove': {
+        await this.removeCartItem(event.productid);
+        this.getCartItems();
+        break;
+      }
+    }
   }
 }
