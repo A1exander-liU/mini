@@ -26,6 +26,9 @@ export class OrderService {
         region: true,
         country: true,
         postal_code: true,
+        subtotal: true,
+        tax: true,
+        total: true,
         order_items: {
           select: {
             productid: true,
@@ -72,6 +75,9 @@ export class OrderService {
         region: order.region,
         country: order.country,
         postal_code: order.postal_code,
+        subtotal: order.subtotal,
+        tax: order.tax,
+        total: order.total,
         order_items,
       },
     };
