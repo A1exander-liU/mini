@@ -82,6 +82,9 @@ model orders {
   region      String?
   country     String
   postal_code String?
+  subtotal    Decimal?      @default(0.00) @db.Money
+  tax         Decimal?      @default(0.00) @db.Money
+  total       Decimal?      @default(0.00) @db.Money
   order_items order_items[]
   users       users         @relation(fields: [userid], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
