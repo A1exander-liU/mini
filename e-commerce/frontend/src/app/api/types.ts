@@ -125,6 +125,9 @@ export type BasicOrder = {
   region: string;
   country: string;
   postal_code: string;
+  subtotal: string;
+  tax: string;
+  total: string;
 };
 
 export type FullOrderItem = OrderItem & {
