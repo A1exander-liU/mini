@@ -9,6 +9,7 @@ import {
   OneProductRes,
   ProductCategory,
   GetCartItemsRes,
+  CreateOrderReq,
 } from './types';
 
 @Injectable({
@@ -137,5 +138,9 @@ export class ApiService {
 
   async getCartItems() {
     return this.get<GetCartItemsRes>(`/v1/cart`);
+  }
+
+  async createOrder(req: CreateOrderReq) {
+    return this.post<BaseRes>('/v1/orders', req);
   }
 }

@@ -98,3 +98,17 @@ export type CartItem = {
 export type GetCartItemsRes = BaseRes & {
   cart: CartItem[];
 };
+
+export type OrderItem = {
+  productId: number;
+  quantity: number;
+};
+
+export type CreateOrderReq = {
+  address: string;
+  city: string;
+  region?: string | null | undefined;
+  country: string;
+  postalCode?: string | null | undefined;
+  orderItems: OrderItem[];
+};
