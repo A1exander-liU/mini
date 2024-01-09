@@ -94,6 +94,9 @@ export class OrderService {
           },
         },
       });
+      await this.prisma.shopping_carts.deleteMany({
+        where: { userid: userId },
+      });
     } catch (err) {
       if (err.code === 'P2003') {
         throw new BadRequestException(
