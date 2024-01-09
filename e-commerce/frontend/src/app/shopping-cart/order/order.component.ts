@@ -60,11 +60,6 @@ export class OrderComponent {
     if (postalCodeErrors && postalCodeErrors['pattern']) {
       this.postalCodeError = 'Not a valid postal code';
     }
-
-    console.log(addressErrors);
-    console.log(cityErrors);
-    console.log(countryErrors);
-    console.log(postalCodeErrors);
   }
 
   handleOrder() {
