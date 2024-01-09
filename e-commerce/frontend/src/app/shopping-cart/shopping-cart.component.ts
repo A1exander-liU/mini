@@ -44,12 +44,10 @@ export class ShoppingCartComponent implements OnInit {
     switch (event.type) {
       case 'inc': {
         await this.incrementCartItem(event.productid);
-        this.getCartItems();
         break;
       }
       case 'dec': {
         await this.decrementCartItem(event.productid);
-        this.getCartItems();
         break;
       }
       case 'remove': {

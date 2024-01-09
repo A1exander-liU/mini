@@ -46,6 +46,7 @@ export class CartItemComponent implements OnChanges {
   }
 
   decrementQuantity() {
+    this.cartItem!.quantity--;
     this.cartItemUpdated.emit({
       type: 'dec',
       userid: this.cartItem!.userid,
@@ -54,6 +55,7 @@ export class CartItemComponent implements OnChanges {
   }
 
   incrementQuantity() {
+    this.cartItem!.quantity++;
     this.cartItemUpdated.emit({
       type: 'inc',
       userid: this.cartItem!.userid,
