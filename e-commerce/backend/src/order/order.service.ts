@@ -93,6 +93,9 @@ export class OrderService {
           region: orderDetails.region,
           country: orderDetails.city,
           postal_code: orderDetails.postalCode,
+          subtotal: orderDetails.subtotal,
+          tax: orderDetails.tax,
+          total: orderDetails.total,
           order_items: {
             create: orderDetails.orderItems.map((item) => {
               return { productid: item.productId, quantity: item.quantity };

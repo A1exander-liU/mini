@@ -1,6 +1,7 @@
 import { Type } from 'class-transformer';
 import {
   IsArray,
+  IsCurrency,
   IsNumber,
   IsOptional,
   IsPositive,
@@ -31,6 +32,15 @@ export class CreateOrderDto {
   @ValidateNested({ each: true })
   @Type(() => CreateOrderItemDto)
   orderItems: CreateOrderItemDto[];
+
+  @IsCurrency()
+  subtotal: string;
+
+  @IsCurrency()
+  tax: string;
+
+  @IsCurrency()
+  total: string;
 }
 
 export class CreateOrderItemDto {
