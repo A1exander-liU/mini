@@ -7,6 +7,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { FullProductComponent } from './product/full-product/full-product.component';
 import { ProductsComponent } from './products/products.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { OrderCreatedComponent } from './order-created/order-created.component';
 
 export const routes: Routes = [
   {
@@ -43,6 +44,10 @@ export const routes: Routes = [
         path: 'cart',
         component: ShoppingCartComponent,
         canActivate: [AuthGuard],
+      },
+      {
+        path: 'order-success',
+        component: OrderCreatedComponent,
       },
     ],
   },
