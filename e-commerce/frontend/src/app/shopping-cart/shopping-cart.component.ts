@@ -8,6 +8,7 @@ import {
 import Decimal from 'decimal.js';
 import { CurrencyPipe } from '@angular/common';
 import { OrderComponent, OrderEvent } from './order/order.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -20,7 +21,10 @@ export class ShoppingCartComponent implements OnInit {
   cartItems: CartItem[] = [];
   prices: { [productid: string]: string } = {};
 
-  constructor(private readonly api: ApiService) {}
+  constructor(
+    private readonly api: ApiService,
+    private readonly router: Router
+  ) {}
 
   ngOnInit(): void {
     this.getCartItems();
@@ -89,7 +93,9 @@ export class ShoppingCartComponent implements OnInit {
     }
     this.api
       .createOrder({ ...event, orderItems })
-      .then((res) => console.log(res))
+      .then((res) => {
+        this.router.navigate(['order-success']);
+      })
       .catch((err) => console.log(err));
   }
 
