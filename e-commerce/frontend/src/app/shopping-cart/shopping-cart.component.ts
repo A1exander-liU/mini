@@ -7,11 +7,12 @@ import {
 } from './cart-item/cart-item.component';
 import Decimal from 'decimal.js';
 import { CurrencyPipe } from '@angular/common';
+import { OrderComponent } from './order/order.component';
 
 @Component({
   selector: 'app-shopping-cart',
   standalone: true,
-  imports: [CartItemComponent, CurrencyPipe],
+  imports: [CartItemComponent, OrderComponent, CurrencyPipe],
   templateUrl: './shopping-cart.component.html',
   styleUrl: './shopping-cart.component.css',
 })
