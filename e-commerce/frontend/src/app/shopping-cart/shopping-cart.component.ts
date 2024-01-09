@@ -7,7 +7,7 @@ import {
 } from './cart-item/cart-item.component';
 import Decimal from 'decimal.js';
 import { CurrencyPipe } from '@angular/common';
-import { OrderComponent } from './order/order.component';
+import { OrderComponent, OrderEvent } from './order/order.component';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -74,6 +74,10 @@ export class ShoppingCartComponent implements OnInit {
         break;
       }
     }
+  }
+
+  handleOrderEvent(event: OrderEvent) {
+    console.log(event);
   }
 
   subTotal() {

@@ -16,5 +16,5 @@
     <h1 class="dark:text-white">Total: {{ total(0.12) | currency }}</h1>
   </div>
 
-  <app-order></app-order>
+  <app-order (orderPlaced)="handleOrderEvent($event)"></app-order>
 </div>
