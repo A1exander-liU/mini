@@ -9,6 +9,7 @@ import {
 import { CartItem, Product } from '../../api/types';
 import { ApiService } from '../../api/api.service';
 import { CurrencyPipe, TitleCasePipe } from '@angular/common';
+import Decimal from 'decimal.js';
 
 export type CartItemUpdateEvent = {
   type: 'inc' | 'dec' | 'remove';
@@ -66,5 +67,14 @@ export class CartItemComponent implements OnChanges {
       userid: this.cartItem!.userid,
       productid: this.cartItem!.productid,
     });
+  }
+
+  getCartItemPrice() {
+    if (!this.product || !this.cartItem) {
+      return '';
+    }
+    const price = new Decimal(this.product!.price);
+    const quantity = new Decimal(this.cartItem!.quantity);
+    return price.mul(quantity).toDecimalPlaces(2).toString();
   }
 }

@@ -9,7 +9,13 @@
       <img [src]="product?.imageurl" class="w-full h-full" />
     </div>
   </div>
-  <div class="w-2/3 flex flex-col justify-end space-y-2">
+  <div class="w-2/3 flex flex-col justify-end items-end space-y-2">
+    <span
+      (click)="removeCartItem()"
+      class="material-symbols-outlined dark:text-white ml-auto mb-auto"
+    >
+      close
+    </span>
     <div class="flex w-fit bg-slate-600 dark:bg-slate-900 rounded-sm ml-auto">
       <button
         [disabled]="cartItem && cartItem.quantity < 2"
@@ -30,11 +36,6 @@
         <p class="text-white">+</p>
       </button>
     </div>
-    <button
-      (click)="removeCartItem()"
-      class="bg-slate-700 dark:bg-slate-800 hover:bg-slate-600 p-1 rounded-sm text-white"
-    >
-      Remove
-    </button>
+    <p class="dark:text-white">{{ getCartItemPrice() | currency }}</p>
   </div>
 </div>
