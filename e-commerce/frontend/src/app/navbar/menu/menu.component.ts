@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ThemeService } from '../../theme.service';
-import { ApiService } from '../../api/api.service';
-import { NavigationStart, Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { ProfileMenuComponent } from './profile-menu/profile-menu.component';
 import { LoginLogoutMenuComponent } from './login-logout-menu/login-logout-menu.component';
-import { filter } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-menu',
@@ -19,34 +18,21 @@ export class MenuComponent implements OnInit {
 
   constructor(
     public readonly theme: ThemeService,
-    private readonly api: ApiService,
-    private readonly router: Router
+    private readonly auth: AuthService
   ) {
-    this.isLoggedIn();
+    auth.isLoggedIn().then((loggedIn) => {
+      this.loggedIn = loggedIn;
+    });
     this.mode = theme.getTheme() === 'dark' ? 'light_mode' : 'dark_mode';
   }
   ngOnInit(): void {
-    this.router.events
-      .pipe(filter((event) => event instanceof NavigationStart))
-      .subscribe((event) => this.isLoggedIn(event));
+    this.auth.authEvent.subscribe((loggedIn) => {
+      this.loggedIn = loggedIn;
+    });
   }
 
   handleThemeChange() {
     this.theme.toggleTheme();
     this.mode = this.theme.getTheme() === 'dark' ? 'light_mode' : 'dark_mode';
-  }
-
-  isLoggedIn(event?: any) {
-    if (event) {
-      console.log(event);
-    }
-    this.api
-      .me()
-      .then(() => {
-        this.loggedIn = true;
-      })
-      .catch(() => {
-        this.loggedIn = false;
-      });
   }
 }
