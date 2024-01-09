@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { FullProduct, HeldItem } from '../../api/types';
-import { Location, TitleCasePipe } from '@angular/common';
+import { HeldItem } from '../../api/types';
+import { TitleCasePipe } from '@angular/common';
 import { ReplacePipe } from '../../pipes/replace.pipe';
 import { RouterLink } from '@angular/router';
 
@@ -12,11 +12,5 @@ import { RouterLink } from '@angular/router';
   styleUrl: './held-item-product.component.css',
 })
 export class HeldItemProductComponent {
-  @Input('product') product: FullProduct<HeldItem> | undefined;
-
-  constructor(private readonly location: Location) {}
-
-  goBack() {
-    this.location.back();
-  }
+  @Input() details: HeldItem | undefined;
 }

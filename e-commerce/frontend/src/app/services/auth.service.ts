@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { EventEmitter, Injectable, OnInit, Output } from '@angular/core';
 import { ApiService } from '../api/api.service';
 import { NavigationStart, Router } from '@angular/router';
 import { filter } from 'rxjs';
@@ -7,7 +7,8 @@ import { filter } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService implements OnInit {
-  loggedIn = false;
+  @Output() private _authEvent = new EventEmitter<boolean>();
+  private _loggedIn = false;
 
   constructor(
     private readonly api: ApiService,
@@ -25,9 +26,19 @@ export class AuthService implements OnInit {
   async isLoggedIn() {
     try {
       await this.api.me();
-      this.loggedIn = true;
+      this._loggedIn = true;
     } catch (err) {
-      this.loggedIn = false;
+      this._loggedIn = false;
     }
+    this._authEvent.emit(this._loggedIn);
+    return this._loggedIn;
+  }
+
+  get authEvent() {
+    return this._authEvent;
+  }
+
+  get loggedIn() {
+    return this._loggedIn;
   }
 }

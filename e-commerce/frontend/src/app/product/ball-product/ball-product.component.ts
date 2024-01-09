@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Ball, FullProduct } from '../../api/types';
-import { Location, TitleCasePipe } from '@angular/common';
+import { Ball } from '../../api/types';
+import { TitleCasePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -11,11 +11,5 @@ import { RouterLink } from '@angular/router';
   styleUrl: './ball-product.component.css',
 })
 export class BallProductComponent {
-  @Input('product') product: FullProduct<Ball> | undefined;
-
-  constructor(private readonly location: Location) {}
-
-  goBack() {
-    this.location.back();
-  }
+  @Input() details: Ball | undefined;
 }

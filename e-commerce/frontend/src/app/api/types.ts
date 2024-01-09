@@ -80,7 +80,7 @@ export type Ball = {
   advantage: CatchAdvantage;
 };
 
-type ProductTypes = Medicine | Collectible | HeldItem | Ball;
+export type ProductTypes = Medicine | Collectible | HeldItem | Ball;
 
 export type FullProduct<T extends ProductTypes = ProductTypes> = Product & {
   details: T;
