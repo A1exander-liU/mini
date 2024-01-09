@@ -1,1 +1,12 @@
-<p>order-item works!</p>
+<div
+  class="p-2 rounded-sm min-h-24 bg-slate-300 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-400"
+>
+  <h1 class="text-lg font-bold ml-auto mb-auto dark:text-white">
+    {{ order?.id }}
+  </h1>
+  <div class="dark:text-white">
+    <p class="dark:text-white">{{ order?.city }}, {{ order?.country }}</p>
+    <p class="text-slate-600 dark:text-slate-400">{{ order?.address }}</p>
+    <p class="dark:text-white text-right">{{ order?.total | currency }}</p>
+  </div>
+</div>

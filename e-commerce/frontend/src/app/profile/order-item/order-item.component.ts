@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { BasicOrder } from '../../api/types';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-order-item',
   standalone: true,
-  imports: [],
+  imports: [CurrencyPipe],
   templateUrl: './order-item.component.html',
   styleUrl: './order-item.component.css',
 })
