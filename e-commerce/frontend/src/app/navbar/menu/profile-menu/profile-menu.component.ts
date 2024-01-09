@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-profile-menu',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './profile-menu.component.html',
   styleUrl: './profile-menu.component.css',
 })
