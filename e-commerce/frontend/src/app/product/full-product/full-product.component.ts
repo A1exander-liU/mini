@@ -78,6 +78,13 @@ export class FullProductComponent implements OnInit {
     return this.product?.details as Ball;
   }
 
+  addToCart() {
+    if (!this.product) {
+      return;
+    }
+    this.api.addToCart(this.product.id);
+  }
+
   goBack() {
     this.location.back();
   }
