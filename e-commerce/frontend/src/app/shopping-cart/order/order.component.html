@@ -1,1 +1,89 @@
-<p>order works!</p>
+<div>
+  <h1
+    class="font-bold text-lg dark:text-white bg-slate-300 dark:bg-slate-700 p-1 mt-6"
+  >
+    Order Details
+  </h1>
+  <form [formGroup]="orderForm" (ngSubmit)="handleOrder()">
+    <label>
+      <p class="dark:text-white">
+        Address
+        <span class="text-red-600">*</span>
+      </p>
+      <input
+        #address
+        id="address"
+        class="px-2 py-1 border-b-2 w-full rounded-sm focus:border-slate-700 focus:outline-none border-2"
+        type="text"
+        placeholder="1234 E 999th Ave"
+        formControlName="address"
+      />
+      <p class="text-red-600 text-sm h-4">{{ "" }}</p>
+    </label>
+
+    <label>
+      <p class="dark:text-white">
+        City
+        <span class="text-red-600">*</span>
+      </p>
+      <input
+        #city
+        id="city"
+        class="px-2 py-1 border-b-2 w-full rounded-sm focus:border-slate-700 focus:outline-none border-2"
+        type="text"
+        placeholder="City"
+        formControlName="address"
+      />
+      <p class="text-red-600 text-sm h-4">{{ "" }}</p>
+    </label>
+
+    <label>
+      <p class="dark:text-white">Region</p>
+      <input
+        #region
+        id="region"
+        class="px-2 py-1 border-b-2 w-full rounded-sm focus:border-slate-700 focus:outline-none border-2"
+        type="text"
+        placeholder="B.C"
+        formControlName="region"
+      />
+      <p class="text-red-600 text-sm h-4">{{ "" }}</p>
+    </label>
+
+    <label>
+      <p class="dark:text-white">
+        Country
+        <span class="text-red-600">*</span>
+      </p>
+      <input
+        #country
+        id="country"
+        class="px-2 py-1 border-b-2 w-full rounded-sm focus:border-slate-700 focus:outline-none border-2"
+        type="text"
+        placeholder="Canada"
+        formControlName="country"
+      />
+      <p class="text-red-600 text-sm h-4">{{ "" }}</p>
+    </label>
+
+    <label>
+      <p class="dark:text-white">Postal Code</p>
+      <input
+        #postalCode
+        id="postalCode"
+        class="px-2 py-1 border-b-2 w-full rounded-sm focus:border-slate-700 focus:outline-none border-2"
+        type="text"
+        placeholder="A1A 1A1"
+        formControlName="postalCode"
+      />
+      <p class="text-red-600 text-sm h-4">{{ "" }}</p>
+    </label>
+
+    <button
+      type="submit"
+      class="dark:text-white bg-slate-700 text-white dark:bg-slate-700 hover:bg-slate-600 dark:hover:bg-slate-600 rounded-sm w-full py-1"
+    >
+      Order
+    </button>
+  </form>
+</div>
