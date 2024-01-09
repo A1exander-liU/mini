@@ -20,7 +20,7 @@ export class OrderComponent {
     region: new FormControl(''),
     country: new FormControl('', [Validators.required]),
     postalCode: new FormControl('', [
-      Validators.pattern(/^(\d{5}(-\d{4})?|[A-Z]\d[A-Z] *\d[A-Z]\d)$/),
+      Validators.pattern(/^(\d{5}(-\d{4})?|[A-Z]\d[A-Z] *\d[A-Z]\d)$/i),
     ]),
   });
 
