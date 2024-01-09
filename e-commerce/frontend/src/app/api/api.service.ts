@@ -8,6 +8,7 @@ import {
   FullProduct,
   OneProductRes,
   ProductCategory,
+  GetCartItemsRes,
 } from './types';
 
 @Injectable({
@@ -120,5 +121,21 @@ export class ApiService {
 
   async oneProduct(id: number): Promise<OneProductRes> {
     return this.get<OneProductRes>(`/v1/products/${id}`);
+  }
+
+  async addToCart(id: number) {
+    return this.put<BaseRes>(`/v1/cart/${id}`, null);
+  }
+
+  async updateCartItem(id: number, operation: 'inc' | 'dec') {
+    return this.patch<BaseRes>(`/v1/cart/${id}?operation=${operation}`, null);
+  }
+
+  async removeFromCart(id: number) {
+    return this.delete<BaseRes>(`/v1/cart/${id}`);
+  }
+
+  async getCartItems() {
+    return this.get<GetCartItemsRes>(`/v1/cart`);
   }
 }
