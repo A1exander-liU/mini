@@ -112,3 +112,34 @@ export type CreateOrderReq = {
   postalCode?: string | null | undefined;
   orderItems: OrderItem[];
 };
+
+export type BasicOrder = {
+  id: number;
+  userid: number;
+  createdat: string;
+  address: string;
+  city: string;
+  region: string;
+  country: string;
+  postal_code: string;
+};
+
+export type FullOrderItem = OrderItem & {
+  name: string;
+  description: string;
+  imageUrl: string;
+  category: string;
+  price: string;
+};
+
+export type FullOrder = BasicOrder & {
+  order_items: FullOrderItem[];
+};
+
+export type AllOrdersRes = BaseRes & {
+  orders: BasicOrder[];
+};
+
+export type OneOrderRes = BaseRes & {
+  order: FullOrder;
+};

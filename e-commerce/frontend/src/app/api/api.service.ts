@@ -10,6 +10,8 @@ import {
   ProductCategory,
   GetCartItemsRes,
   CreateOrderReq,
+  AllOrdersRes,
+  OneOrderRes,
 } from './types';
 
 @Injectable({
@@ -142,5 +144,13 @@ export class ApiService {
 
   async createOrder(req: CreateOrderReq) {
     return this.post<BaseRes>('/v1/orders', req);
+  }
+
+  async getOrders() {
+    return this.get<AllOrdersRes>('/v1/orders');
+  }
+
+  async getOneOrder(orderId: number) {
+    return this.get<OneOrderRes>(`/v1/orders/${orderId}`);
   }
 }
