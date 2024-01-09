@@ -92,7 +92,13 @@ export class ShoppingCartComponent implements OnInit {
       event.postalCode = null;
     }
     this.api
-      .createOrder({ ...event, orderItems })
+      .createOrder({
+        ...event,
+        subtotal: this.subTotal(),
+        tax: this.tax(0.12),
+        total: this.total(0.12),
+        orderItems,
+      })
       .then((res) => {
         this.router.navigate(['order-success']);
       })

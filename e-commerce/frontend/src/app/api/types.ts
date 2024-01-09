@@ -110,6 +110,9 @@ export type CreateOrderReq = {
   region?: string | null | undefined;
   country: string;
   postalCode?: string | null | undefined;
+  subtotal: string;
+  tax: string;
+  total: string;
   orderItems: OrderItem[];
 };
 
