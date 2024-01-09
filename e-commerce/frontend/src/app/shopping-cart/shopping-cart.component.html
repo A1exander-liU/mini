@@ -1,5 +1,8 @@
 <div class="px-2 py-3 min-h-screen max-h-fit">
   @for (cartItem of cartItems; track cartItem.id) {
-  <app-cart-item [cartItem]="cartItem"></app-cart-item>
+  <app-cart-item
+    [cartItem]="cartItem"
+    (cartItemUpdated)="handleEvents($event)"
+  ></app-cart-item>
   }
 </div>

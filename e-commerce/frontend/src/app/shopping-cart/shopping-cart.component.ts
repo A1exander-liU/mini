@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api/api.service';
 import { CartItem } from '../api/types';
-import { CartItemComponent } from './cart-item/cart-item.component';
+import {
+  CartItemComponent,
+  CartItemUpdateEvent,
+} from './cart-item/cart-item.component';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -23,5 +26,9 @@ export class ShoppingCartComponent implements OnInit {
     this.api.getCartItems().then((res) => {
       this.cartItems = res.cart;
     });
+  }
+
+  handleEvents(event: CartItemUpdateEvent) {
+    console.log(event);
   }
 }
