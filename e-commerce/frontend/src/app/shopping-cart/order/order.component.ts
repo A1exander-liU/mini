@@ -1,10 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+
+export type OrderEvent = {
+  address: string;
+  city: string;
+  region?: string | null | undefined;
+  country: string;
+  postalCode?: string | null | undefined;
+};
 
 @Component({
   selector: 'app-order',
@@ -14,6 +22,8 @@ import {
   styleUrl: './order.component.css',
 })
 export class OrderComponent {
+  @Output() orderPlaced = new EventEmitter<OrderEvent>();
+
   orderForm = new FormGroup({
     address: new FormControl('', [Validators.required]),
     city: new FormControl('', [Validators.required]),
@@ -61,6 +71,13 @@ export class OrderComponent {
     this.showErrorMessages();
 
     if (this.orderForm.status === 'VALID') {
+      this.orderPlaced.emit({
+        address: this.orderForm.value.address!,
+        city: this.orderForm.value.city!,
+        region: this.orderForm.value.region,
+        country: this.orderForm.value.country!,
+        postalCode: this.orderForm.value.postalCode,
+      });
     }
   }
 }
