@@ -18,7 +18,7 @@
         placeholder="1234 E 999th Ave"
         formControlName="address"
       />
-      <p class="text-red-600 text-sm h-4">{{ "" }}</p>
+      <p class="text-red-600 text-sm h-4">{{ addressError }}</p>
     </label>
 
     <label>
@@ -34,7 +34,7 @@
         placeholder="City"
         formControlName="address"
       />
-      <p class="text-red-600 text-sm h-4">{{ "" }}</p>
+      <p class="text-red-600 text-sm h-4">{{ cityError }}</p>
     </label>
 
     <label>
@@ -47,7 +47,6 @@
         placeholder="B.C"
         formControlName="region"
       />
-      <p class="text-red-600 text-sm h-4">{{ "" }}</p>
     </label>
 
     <label>
@@ -63,7 +62,7 @@
         placeholder="Canada"
         formControlName="country"
       />
-      <p class="text-red-600 text-sm h-4">{{ "" }}</p>
+      <p class="text-red-600 text-sm h-4">{{ countryError }}</p>
     </label>
 
     <label>
@@ -76,12 +75,12 @@
         placeholder="A1A 1A1"
         formControlName="postalCode"
       />
-      <p class="text-red-600 text-sm h-4">{{ "" }}</p>
+      <p class="text-red-600 text-sm h-4">{{ postalCodeError }}</p>
     </label>
 
     <button
       type="submit"
-      class="dark:text-white bg-slate-700 text-white dark:bg-slate-700 hover:bg-slate-600 dark:hover:bg-slate-600 rounded-sm w-full py-1"
+      class="dark:text-white bg-slate-700 text-white dark:bg-slate-700 hover:bg-slate-600 dark:hover:bg-slate-600 rounded-sm w-full py-1 mt-2"
     >
       Order
     </button>

@@ -24,7 +24,38 @@ export class OrderComponent {
     ]),
   });
 
-  showErrorMessages() {}
+  addressError = '';
+  cityError = '';
+  countryError = '';
+  postalCodeError = '';
+
+  showErrorMessages() {
+    const addressErrors = this.orderForm.get('address')?.errors;
+    const cityErrors = this.orderForm.get('city')?.errors;
+    const countryErrors = this.orderForm.get('country')?.errors;
+    const postalCodeErrors = this.orderForm.get('postalCode')?.errors;
+
+    if (addressErrors && addressErrors['required']) {
+      this.addressError = 'This field is required';
+    }
+
+    if (cityErrors && cityErrors['required']) {
+      this.cityError = 'This field is required';
+    }
+
+    if (countryErrors && countryErrors['required']) {
+      this.countryError = 'This field is required';
+    }
+
+    if (postalCodeErrors && postalCodeErrors['pattern']) {
+      this.postalCodeError = 'Not a valid postal code';
+    }
+
+    console.log(addressErrors);
+    console.log(cityErrors);
+    console.log(countryErrors);
+    console.log(postalCodeErrors);
+  }
 
   handleOrder() {
     this.showErrorMessages();
