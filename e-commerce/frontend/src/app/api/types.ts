@@ -87,3 +87,14 @@ export type FullProduct<T extends ProductTypes = ProductTypes> = Product & {
 };
 
 export type OneProductRes = BaseRes & { product: FullProduct };
+
+export type CartItem = {
+  id: number;
+  userid: number;
+  productid: number;
+  quantity: number;
+};
+
+export type GetCartItemsRes = BaseRes & {
+  cart: CartItem[];
+};
