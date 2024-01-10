@@ -1,3 +1,19 @@
 <div class="px-2 py-3 min-h-screen max-h-fit">
-  <p class="dark:text-white text-lg font-bold">{{ order?.id }}</p>
+  <a class="material-symbols-outlined dark:text-white" (click)="goBack()">
+    arrow_back
+  </a>
+  <p class="dark:text-white text-lg font-bold">Order Id: {{ order?.id }}</p>
+  <p class="text-sm dark:text-slate-400">
+    {{ order?.createdat }}
+  </p>
+  <div class="flex flex-col space-y-2 mt-4">
+    @for (item of order?.order_items; track $index) {
+    <app-order-history-item [orderItem]="item"></app-order-history-item>
+    }
+  </div>
+  <div class="mt-4 text-right bg-slate-300 dark:bg-slate-700 p-2">
+    <p class="dark:text-white">Subtotal: {{ order?.subtotal | currency }}</p>
+    <p class="dark:text-white">Tax: {{ order?.tax | currency }}</p>
+    <p class="dark:text-white">Total: {{ order?.total | currency }}</p>
+  </div>
 </div>

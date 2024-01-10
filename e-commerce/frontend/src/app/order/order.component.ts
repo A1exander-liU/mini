@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FullOrder } from '../api/types';
 import { ApiService } from '../api/api.service';
+import { OrderHistoryItemComponent } from './order-history-item/order-history-item.component';
+import { CurrencyPipe, Location } from '@angular/common';
 
 @Component({
   selector: 'app-order',
   standalone: true,
-  imports: [],
+  imports: [OrderHistoryItemComponent, CurrencyPipe],
   templateUrl: './order.component.html',
   styleUrl: './order.component.css',
 })
@@ -15,7 +17,8 @@ export class OrderComponent implements OnInit {
 
   constructor(
     private readonly route: ActivatedRoute,
-    private readonly api: ApiService
+    private readonly api: ApiService,
+    private readonly location: Location
   ) {}
 
   ngOnInit(): void {
@@ -23,5 +26,9 @@ export class OrderComponent implements OnInit {
     this.api.getOneOrder(id).then((res) => {
       this.order = { ...res.order };
     });
+  }
+
+  goBack() {
+    this.location.back();
   }
 }
