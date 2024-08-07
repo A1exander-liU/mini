@@ -13,14 +13,15 @@ import {
   AllOrdersRes,
   OneOrderRes,
 } from './types';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  private readonly baseUrl = 'http://localhost:3000/api';
+  private readonly baseUrl = environment.apiUrl;
 
-  constructor(private readonly client: HttpClient) {}
+  constructor(private readonly client: HttpClient) { }
 
   private async get<T>(
     url: string,
