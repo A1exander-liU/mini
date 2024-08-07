@@ -15,7 +15,7 @@ async function bootstrap() {
   });
 
   app.enableCors({
-    origin: true,
+    origin: ["http://localhost:4200", "https://mini-poke-store.vercel.app"],
     allowedHeaders: ['Access-Control-Allow-Credentials', 'Content-Type'],
     credentials: true,
   });
