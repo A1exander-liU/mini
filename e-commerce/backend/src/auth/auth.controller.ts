@@ -12,13 +12,14 @@ import { AuthService } from './auth.service';
 import { LoginDto } from './dtos/login.dto';
 import { Request, Response } from 'express';
 import { Public } from './auth.metadata';
+import { ConfigService } from '@nestjs/config';
 
 @Controller({
   path: 'auth',
   version: '1',
 })
 export class AuthController {
-  constructor(private readonly auth: AuthService) {}
+  constructor(private readonly auth: AuthService, private readonly config: ConfigService) { }
 
   @Public()
   @HttpCode(HttpStatus.OK)
@@ -30,7 +31,8 @@ export class AuthController {
     const token = await this.auth.login(dto.username, dto.password);
     res.cookie('token', token, {
       httpOnly: true,
-      // secure: true,
+      secure: true,
+      sameSite: "none",
       path: '/api',
       maxAge: 60 * 60 * 1000,
     });
