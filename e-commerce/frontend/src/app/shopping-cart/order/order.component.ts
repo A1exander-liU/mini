@@ -40,6 +40,11 @@ export class OrderComponent {
   postalCodeError = '';
 
   showErrorMessages() {
+    this.addressError = '';
+    this.cityError = '';
+    this.countryError = '';
+    this.postalCodeError = '';
+
     const addressErrors = this.orderForm.get('address')?.errors;
     const cityErrors = this.orderForm.get('city')?.errors;
     const countryErrors = this.orderForm.get('country')?.errors;
