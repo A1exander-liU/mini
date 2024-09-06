@@ -9,9 +9,15 @@ export class UserService {
   constructor(private readonly prisma: PrismaService) {}
 
   async register(email: string, username: string, password: string) {
-    const user = await this.prisma.users.findUnique({
-      where: { email, username },
+    let user = await this.prisma.users.findUnique({
+      where: { email },
     });
+
+    if (user) {
+      throw new BadRequestException('Email already exists');
+    }
+
+    user = await this.prisma.users.findUnique({ where: { username } });
 
     if (user) {
       throw new BadRequestException('User already exists');
