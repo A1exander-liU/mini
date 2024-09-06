@@ -12,6 +12,7 @@ import {
   CreateOrderReq,
   AllOrdersRes,
   OneOrderRes,
+  RegisterReq,
 } from './types';
 import { environment } from '../../environments/environment';
 
@@ -21,11 +22,11 @@ import { environment } from '../../environments/environment';
 export class ApiService {
   private readonly baseUrl = environment.apiUrl;
 
-  constructor(private readonly client: HttpClient) { }
+  constructor(private readonly client: HttpClient) {}
 
   private async get<T>(
     url: string,
-    options?: Parameters<typeof this.client.get>[1]
+    options?: Parameters<typeof this.client.get>[1],
   ): Promise<T> {
     return new Promise((resolve, reject) => {
       this.client
@@ -43,7 +44,7 @@ export class ApiService {
   private post<T>(
     url: string,
     body: any,
-    options?: Parameters<typeof this.client.post>[2]
+    options?: Parameters<typeof this.client.post>[2],
   ): Promise<T> {
     return new Promise((resolve, reject) => {
       this.client
@@ -61,7 +62,7 @@ export class ApiService {
   private put<T>(
     url: string,
     body: any,
-    options?: Parameters<typeof this.client.put>[2]
+    options?: Parameters<typeof this.client.put>[2],
   ): Promise<T> {
     return new Promise((resolve, reject) => {
       this.client
@@ -76,7 +77,7 @@ export class ApiService {
   private patch<T>(
     url: string,
     body: any,
-    options?: Parameters<typeof this.client.patch>[2]
+    options?: Parameters<typeof this.client.patch>[2],
   ) {
     return new Promise((resolve, reject) => {
       this.client
@@ -93,7 +94,7 @@ export class ApiService {
 
   private delete<T>(
     url: string,
-    options?: Parameters<typeof this.client.delete>[1]
+    options?: Parameters<typeof this.client.delete>[1],
   ): Promise<T> {
     return new Promise((resolve, reject) => {
       this.client
@@ -109,6 +110,10 @@ export class ApiService {
     return this.post<BaseRes>('/v1/auth/login', req);
   }
 
+  async register(req: RegisterReq): Promise<BaseRes> {
+    return this.post('/v1/user/register', req);
+  }
+
   async me(): Promise<MeRes> {
     return this.get<MeRes>('/v1/auth/me');
   }
@@ -119,7 +124,7 @@ export class ApiService {
 
   async allProducts(category?: ProductCategory): Promise<ProductsRes> {
     return this.get<ProductsRes>(
-      `/v1/products${category != null ? `?category=${category}` : ''}`
+      `/v1/products${category != null ? `?category=${category}` : ''}`,
     );
   }
 

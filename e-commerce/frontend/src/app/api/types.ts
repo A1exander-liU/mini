@@ -4,6 +4,12 @@ export type LoginReq = {
   password: string;
 };
 
+export type RegisterReq = {
+  email: string;
+  username: string;
+  password: string;
+};
+
 // Types for what data is returned at each endpoint
 export type BaseRes = {
   statusCode: number;
