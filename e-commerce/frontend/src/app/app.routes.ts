@@ -9,11 +9,16 @@ import { ProductsComponent } from './products/products.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { OrderCreatedComponent } from './order-created/order-created.component';
 import { OrderComponent } from './order/order.component';
+import { RegisterComponent } from './register/register.component';
 
 export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
   },
   {
     path: '',
