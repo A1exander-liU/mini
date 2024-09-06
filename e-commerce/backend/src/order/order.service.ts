@@ -1,4 +1,9 @@
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateOrderDto } from './dtos/createOrder.dto';
 
@@ -112,6 +117,7 @@ export class OrderService {
           `Order contains products that don't exist`,
         );
       }
+      throw new InternalServerErrorException(err);
     }
     return { statusCode: 201, message: 'Created new order' };
   }
